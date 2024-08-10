@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PubgColors {
-  static const Color primaryColor = Color(0xFF1B8E79),
-      secondaryColor = Color(0xFF7DD684),
-      tertiaryColor = Color(0xFFC6FDFA),
-      blackColor = Colors.black,
+  static const Color primaryColor = Color(0xFF0E303B),
+      secondaryColor = Color(0xFF1777AC),
+      tertiaryColor = Color(0xFFD8FDFB),
+      blackColor = Color(0xFF090907),
       whiteColor = Colors.white;
 }
