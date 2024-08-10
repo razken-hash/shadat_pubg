@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/auth_screen.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
-import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -62,11 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 onEnd: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => PubgScaffold(
-                        content: const Text("HH"),
-                      ),
-                    ),
+                    MaterialPageRoute(builder: (_) => const AuthScreen()),
                   );
                 },
               ),
