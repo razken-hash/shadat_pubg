@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 40,
             width: 40,
             child: CustomPaint(
-              painter: TriangleShape(),
+              painter: SpinWheelPointerPainter(),
               child: const Center(),
             ),
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 
-class TriangleShape extends CustomPainter {
+class SpinWheelPointerPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
