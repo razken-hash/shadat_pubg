@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shadat_pubg/views/screens/splash_screen.dart';
+import 'package:shadat_pubg/views/config/internationalization.dart';
+import 'package:shadat_pubg/views/screens/pubg_screen.dart';
+import 'package:shadat_pubg/views/screens/splash/splash_screen.dart';
 import 'package:shadat_pubg/views/themes/themes.dart';
+import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 
 void main() {
   runApp(const ShadatPubg());
@@ -11,13 +14,15 @@ class ShadatPubg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme,
-        home: const SplashScreen(),
-      ),
+    final MyLocalization myLocalization = MyLocalization();
+    final MyLocalizationDelegate myLocalizationDelegate =
+        MyLocalizationDelegate(myLocalization);
+
+    return MaterialApp(
+      localizationsDelegates: [myLocalizationDelegate],
+      debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      home: const PubgScreen(),
     );
   }
 }
