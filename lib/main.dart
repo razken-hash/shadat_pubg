@@ -22,7 +22,7 @@ class ShadatPubg extends StatelessWidget {
       localizationsDelegates: [myLocalizationDelegate],
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: const PubgScreen(),
+      home: const SplashScreen(),
     );
   }
 }

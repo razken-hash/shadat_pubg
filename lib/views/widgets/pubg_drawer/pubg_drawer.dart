@@ -25,22 +25,25 @@ class PubgDrawer extends StatelessWidget {
           child: SafeArea(
             child: Column(
               children: [
-                const ListTile(
+                ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.white24,
                     radius: 20,
-                    // foregroundImage: AssetImage(
-                    //   AssetsManager.getImage("person"),
-                    // ),
-                    child: Icon(
+                    foregroundImage: AssetImage(
+                      AssetsManager.getImage("person"),
+                    ),
+                    child: const Icon(
                       CupertinoIcons.person,
                     ),
                   ),
-                  title: Text(
-                    "LangVocab.userName",
+                  title: const Text(
+                    "AbdErrazak KENNICHE",
                     style: TextStyle(color: Colors.white),
                   ),
-                  subtitle: Text("LangVocab.userRole"),
+                  subtitle: const Text(
+                    "PUBG Enthausiast",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
