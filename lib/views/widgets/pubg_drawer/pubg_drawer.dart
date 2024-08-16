@@ -21,26 +21,26 @@ class PubgDrawer extends StatelessWidget {
       builder: (context, drawerProvider, child) {
         return Container(
           width: 288,
-          color: PubgColors.primaryColor,
+          color: Colors.transparent,
           child: SafeArea(
             child: Column(
               children: [
-                ListTile(
+                const ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.white24,
                     radius: 20,
-                    foregroundImage: AssetImage(
-                      AssetsManager.getImage("profile"),
-                    ),
-                    child: const Icon(
+                    // foregroundImage: AssetImage(
+                    //   AssetsManager.getImage("person"),
+                    // ),
+                    child: Icon(
                       CupertinoIcons.person,
                     ),
                   ),
-                  title: const Text(
+                  title: Text(
                     "LangVocab.userName",
                     style: TextStyle(color: Colors.white),
                   ),
-                  subtitle: const Text("LangVocab.userRole"),
+                  subtitle: Text("LangVocab.userRole"),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,20 +61,19 @@ class PubgDrawer extends StatelessWidget {
                       (index) {
                         DrawerItem drawerItem =
                             drawerProvider.browseDrawerItems[index];
-                        return InkWell(
-                          onTap: () {
+                        return PubgDrawerTile(
+                          drawerItem: drawerItem,
+                          isSelected: drawerItem.screen.runtimeType ==
+                              drawerProvider.currentScreen.runtimeType,
+                          onItemSelected: () {
                             drawerProvider.navigateTo(drawerItem.screen);
                             Future.delayed(const Duration(milliseconds: 200))
-                                .then((v) {
-                              onItemSelected();
-                            });
+                                .then(
+                              (v) {
+                                onItemSelected();
+                              },
+                            );
                           },
-                          child: PubgDrawerTile(
-                            drawerItem: drawerItem,
-                            isSelected: drawerItem.screen.runtimeType ==
-                                drawerProvider.currentScreen.runtimeType,
-                            onItemSelected: onItemSelected,
-                          ),
                         );
                       },
                     ),
@@ -89,25 +88,34 @@ class PubgDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
+                    ...[],
                     ...List.generate(
                       drawerProvider.moreDrawerItems.length,
                       (index) {
                         DrawerItem drawerItem =
                             drawerProvider.moreDrawerItems[index];
-                        return InkWell(
-                          onTap: () {
-                            drawerProvider.navigateTo(drawerItem.screen);
+                        return PubgDrawerTile(
+                          drawerItem: drawerItem,
+                          isSelected: drawerItem.screen.runtimeType ==
+                              drawerProvider.currentScreen.runtimeType,
+                          onItemSelected: () {
+                            if (index == 0) {
+                              drawerProvider.navigateTo(drawerItem.screen);
+                            } else {
+                              drawerProvider
+                                  .navigateTo(drawerProvider.drawerItems[0]);
+                              if (index == 1) {
+                                drawerProvider.launchWhatsApp();
+                              } else {
+                                //TODO: drawerProvider.shareApp();
+                              }
+                            }
+
                             Future.delayed(const Duration(milliseconds: 200))
                                 .then((v) {
                               onItemSelected();
                             });
                           },
-                          child: PubgDrawerTile(
-                            drawerItem: drawerItem,
-                            isSelected: drawerItem.screen.runtimeType ==
-                                drawerProvider.currentScreen.runtimeType,
-                            onItemSelected: onItemSelected,
-                          ),
                         );
                       },
                     ),

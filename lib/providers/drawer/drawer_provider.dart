@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:collection';
 
 import 'package:shadat_pubg/providers/drawer/drawer_item.dart';
+import 'package:shadat_pubg/services/whatsapp_service.dart';
 import 'package:shadat_pubg/views/screens/daily_prize/daily_prize_screen.dart';
 import 'package:shadat_pubg/views/screens/home/home_screen.dart';
 import 'package:shadat_pubg/views/screens/invite_friends/invite_friends_screen.dart';
 import 'package:shadat_pubg/views/screens/profile/profile_screen.dart';
 import 'package:shadat_pubg/views/screens/withdraw/withdraw_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DrawerProvider extends ChangeNotifier {
   final List<DrawerItem> _drawerItems = [
@@ -95,6 +95,10 @@ class DrawerProvider extends ChangeNotifier {
       _currentIndex = index;
     }
     notifyListeners();
+  }
+
+  void launchWhatsApp() {
+    WhatsAppService.launchWhatsApp();
   }
 }
 

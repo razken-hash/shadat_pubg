@@ -64,112 +64,81 @@ class _PubgScreenState extends State<PubgScreen>
                 drawerProvider.controlDrawer(_animationController);
               }
             },
-            child: Scaffold(
-              extendBody: true,
-              resizeToAvoidBottomInset: false,
-              backgroundColor: PubgColors.primaryColor,
-              body: Stack(
-                children: [
-                  AnimatedPositionedDirectional(
-                    curve: Curves.fastOutSlowIn,
-                    duration: const Duration(milliseconds: 500),
-                    start: drawerProvider.isDrawerOpened ? 0 : -288,
-                    child: PubgDrawer(
-                      onItemSelected: () {
-                        drawerProvider.controlDrawer(_animationController);
-                      },
-                    ),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    AssetsManager.getImage("pubg_3"),
                   ),
-                  Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.identity()
-                      ..setEntry(3, 2, 0.001)
-                      ..rotateY(_animation.value -
-                          (Directionality.of(context) == TextDirection.ltr
-                                  ? 30
-                                  : 85) *
-                              _animation.value *
-                              pi /
-                              180),
-                    child: Transform.translate(
-                      offset: Offset(
-                          (Directionality.of(context) == TextDirection.ltr
-                                  ? 1
-                                  : -1) *
-                              _animation.value *
-                              265,
-                          0),
-                      child: Transform.scale(
-                        scale: _scaleAnimation.value,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(_animation.value * 25)),
-                          child: Scaffold(
-                            body: SafeArea(
-                              child: Column(
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+              child: Scaffold(
+                extendBody: false,
+                resizeToAvoidBottomInset: false,
+                extendBodyBehindAppBar: false,
+                backgroundColor: PubgColors.primaryColor.withOpacity(.5),
+                body: Stack(
+                  children: [
+                    AnimatedPositionedDirectional(
+                      curve: Curves.fastOutSlowIn,
+                      duration: const Duration(milliseconds: 500),
+                      start: drawerProvider.isDrawerOpened ? 0 : -288,
+                      child: PubgDrawer(
+                        onItemSelected: () {
+                          drawerProvider.controlDrawer(_animationController);
+                        },
+                      ),
+                    ),
+                    Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.001)
+                        ..rotateY(_animation.value -
+                            (Directionality.of(context) == TextDirection.ltr
+                                    ? 30
+                                    : 85) *
+                                _animation.value *
+                                pi /
+                                180),
+                      child: Transform.translate(
+                        offset: Offset(
+                            (Directionality.of(context) == TextDirection.ltr
+                                    ? 1
+                                    : -1) *
+                                _animation.value *
+                                265,
+                            0),
+                        child: Transform.scale(
+                          scale: _scaleAnimation.value,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(_animation.value * 25)),
+                            child: Scaffold(
+                              backgroundColor: Colors.transparent,
+                              body: Stack(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            drawerProvider.controlDrawer(
-                                                _animationController);
-                                          },
-                                          child: SvgPicture.asset(
-                                            width: 40,
-                                            fit: BoxFit.fitWidth,
-                                            AssetsManager.getVector("menu"),
-                                          ),
+                                  Center(
+                                    child: drawerProvider.currentScreen,
+                                  ),
+                                  SafeArea(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20.0, vertical: 10),
+                                      child: InkWell(
+                                        onTap: () {
+                                          drawerProvider.controlDrawer(
+                                              _animationController);
+                                        },
+                                        child: SvgPicture.asset(
+                                          width: 40,
+                                          fit: BoxFit.fitWidth,
+                                          color: PubgColors.whiteColor,
+                                          AssetsManager.getVector("menu"),
                                         ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            const Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Text(
-                                                  "sdfdsffs",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    color:
-                                                        PubgColors.blackColor,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "adasasd",
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(width: 10),
-                                            CircleAvatar(
-                                              radius: 20,
-                                              backgroundColor:
-                                                  PubgColors.primaryColor,
-                                              foregroundImage: AssetImage(
-                                                AssetsManager.getImage(
-                                                    "majlis"),
-                                              ),
-                                              child: SvgPicture.asset(
-                                                AssetsManager.getVector(
-                                                    "persons"),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                  Expanded(
-                                    child: drawerProvider.currentScreen,
-                                  )
                                 ],
                               ),
                             ),
@@ -177,8 +146,8 @@ class _PubgScreenState extends State<PubgScreen>
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );

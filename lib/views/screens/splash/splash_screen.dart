@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
 import 'package:shadat_pubg/views/screens/auth/auth_screen.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
+import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -25,47 +26,36 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              AssetsManager.getImage("pubg_wallpaper"),
-            ),
-            fit: BoxFit.cover,
+    return PubgScaffold(
+      backgroundImage: "pubg_0",
+      content: Center(
+        child: Container(
+          width: 200,
+          height: 20,
+          margin: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * .5,
           ),
-        ),
-        child: Center(
-          child: Container(
-            width: 200,
-            height: 20,
-            margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * .5,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              width: 2,
+              color: PubgColors.tertiaryColor,
             ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                width: 2,
-                color: PubgColors.tertiaryColor,
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: AnimatedContainer(
-                duration: const Duration(seconds: 3),
-                curve: Curves.easeInToLinear,
-                color: PubgColors.tertiaryColor,
-                width: progress,
-                height: 20,
-                onEnd: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const AuthScreen()),
-                  );
-                },
-              ),
+          ),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: AnimatedContainer(
+              duration: const Duration(seconds: 3),
+              curve: Curves.easeInToLinear,
+              color: PubgColors.tertiaryColor,
+              width: progress,
+              height: 20,
+              onEnd: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AuthScreen()),
+                );
+              },
             ),
           ),
         ),

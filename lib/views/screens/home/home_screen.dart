@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:shadat_pubg/views/config/assets_manager.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 import 'package:shadat_pubg/views/widgets/spin_wheel_painter.dart';
@@ -12,49 +14,99 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  double turns = 0;
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  double turns = 0.0625 * 2;
+
+  late AnimationController _animationController;
+
+  double angle = 0;
+  bool back = false;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    )..addListener(() {
+        setState(() {
+          angle = !back ? angle + 1 : angle - 1;
+          if (angle == 3) {
+            back = true;
+          } else if (angle == -3) {
+            back = false;
+          }
+        });
+      });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: PubgScaffold(
-        drawer: const Drawer(),
-        content: Column(
+    return PubgScaffold(
+      content: SafeArea(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top,
-                left: 20,
-                right: 20,
-              ),
-              height: 80,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Builder(builder: (context) {
-                    return IconButton(
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                        icon: const Icon(Icons.menu));
-                  }),
-                  Container(
-                    height: 35,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      color: PubgColors.primaryColor,
-                      borderRadius: BorderRadius.circular(17.5),
-                      border: Border.all(
-                          width: 2, color: PubgColors.secondaryColor),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                height: 35,
+                width: 60,
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: PubgColors.primaryColor,
+                  borderRadius: BorderRadius.circular(17.5),
+                  border:
+                      Border.all(width: 2, color: PubgColors.secondaryColor),
+                ),
+                child: const Center(
+                  child: Text(
+                    "1",
+                    style: TextStyle(
+                      color: PubgColors.whiteColor,
                     ),
-                    child: const Center(
-                      child: Text(
-                        "1",
-                        style: TextStyle(
-                          color: PubgColors.whiteColor,
+                  ),
+                ),
+              ),
+            ),
+            const Spacer(),
+            SizedBox(
+              height: 320,
+              width: 320,
+              child: Stack(
+                children: [
+                  AnimatedRotation(
+                    duration: const Duration(seconds: 3),
+                    turns: turns,
+                    child: Container(
+                      height: 320,
+                      width: 320,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.red,
+                      ),
+                      child: CustomPaint(
+                        painter: SpinWheelPainter(),
+                      ),
+                    ),
+                  ),
+                  AnimatedRotation(
+                    turns: _animationController.isAnimating
+                        ? angle > 0
+                            ? 0.05
+                            : -0.05
+                        : 0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Center(
+                      child: SizedBox(
+                        height: 80,
+                        width: 80,
+                        child: CustomPaint(
+                          painter: SpinWheelPointerPainter(),
                         ),
                       ),
                     ),
@@ -62,67 +114,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: CustomPaint(
-                    painter: SpinWheelPointerPainter(),
-                    child: const Center(),
-                  ),
-                ),
-                AnimatedRotation(
-                  duration: const Duration(seconds: 3),
-                  turns: turns,
-                  child: Container(
-                    height: 320,
-                    width: 320,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red,
-                      border: Border.all(
-                        width: 10,
-                        color: Colors.yellow,
-                      ),
-                    ),
-                    child: CustomPaint(
-                      painter: SpinWheelPainter(),
-                      child: const Center(),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: TextButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        turns = turns < 2
-                            ? 11 + 0.0625 * (Random().nextInt(1000) * 2 + 1)
-                            : 0.0625 * (Random().nextInt(1000) * 2 + 1);
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.rotate_left,
-                      color: PubgColors.whiteColor,
-                    ),
-                    label: const Text(
-                      "تدويــر",
-                      style: TextStyle(
-                        color: PubgColors.whiteColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
             const SizedBox(
-              height: 80,
+              height: 40,
             ),
+            TextButton.icon(
+              onPressed: () {
+                if (_animationController.value == 0) {
+                  _animationController.forward();
+                } else {
+                  _animationController.reverse();
+                }
+                setState(() {
+                  turns = turns < 2
+                      ? 11 + 0.0625 * (Random().nextInt(1000) * 2 + 1)
+                      : 0.0625 * (Random().nextInt(1000) * 2 + 1);
+                });
+              },
+              icon: const Icon(
+                Icons.rotate_left,
+                color: PubgColors.whiteColor,
+              ),
+              label: const Text(
+                "تدويــر",
+                style: TextStyle(
+                  color: PubgColors.whiteColor,
+                ),
+              ),
+            ),
+            const Spacer(),
+            const Spacer(),
           ],
         ),
       ),

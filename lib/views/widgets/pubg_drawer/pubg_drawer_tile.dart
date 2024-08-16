@@ -39,6 +39,9 @@ class PubgDrawerTile extends StatelessWidget {
               ),
             ),
             ListTile(
+              onTap: () {
+                onItemSelected();
+              },
               leading: SvgPicture.asset(
                 width: 35,
                 fit: BoxFit.fitWidth,

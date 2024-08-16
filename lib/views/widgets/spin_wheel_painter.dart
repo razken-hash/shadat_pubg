@@ -8,69 +8,147 @@ class SpinWheelPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final double d = size.height;
-    final double r = d * .5;
+    double r = d * .5;
+    double c = d * .5;
+
+    final paint = Paint();
+    paint.color = const Color(0xFFF3D34A);
+    Path path = Path();
+    path.moveTo(c, c);
+    canvas.drawOval(
+      Rect.fromLTWH(0, 0, d, d),
+      paint,
+    );
+
+    paint.color = const Color(0xFFF06F1D);
+
+    canvas.drawOval(
+      Rect.fromLTWH(r - 7, 3, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(r - 7, d - 17, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(3, r - 7, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(d - 17, r - 7, 14, 14),
+      paint,
+    );
+
+    canvas.drawOval(
+      Rect.fromLTWH(r + r * piBy4 - 14, r - r * piBy4, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(r + r * piBy4 - 14, r + r * piBy4 - 14, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(r - r * piBy4 + 3, r + r * piBy4 - 14, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(r - r * piBy4 - 3, r - r * piBy4 + 3, 14, 14),
+      paint,
+    );
+
+    double cosPiBy3 = cos(pi / 3);
+    double sinPiBy3 = sin(pi / 3);
+    paint.color = const Color(0xFFF3F6EF);
+
+    canvas.drawOval(
+      Rect.fromLTWH(r + r * cosPiBy3 - 26, r - r * sinPiBy3 - 6, 14, 14),
+      paint,
+    );
+    // canvas.drawOval(
+    //   Rect.fromLTWH(r + r * piBy6 - 14, r + r * piBy6 - 14, 14, 14),
+    //   paint,
+    // );
+    // canvas.drawOval(
+    //   Rect.fromLTWH(r - r * piBy6 + 3, r + r * piBy6 - 14, 14, 14),
+    //   paint,
+    // );
+    // canvas.drawOval(
+    //   Rect.fromLTWH(r - r * piBy6 - 3, r - r * piBy6 + 3, 14, 14),
+    //   paint,
+    // );
+
+    path.close();
+    paint.color = Colors.black;
+    canvas.drawPath(path, paint);
+
+    double newR = r - 20;
+    double newD = r - 40;
+
+    Color firstColor = const Color(0xFFF1DEBD),
+        secondColor = const Color(0xFFF4F4F4);
+
     drawPizza(
       canvas,
       size,
-      Offset(r, 0),
-      Offset(r + r * piBy4, r - r * piBy4),
-      Colors.green,
+      Offset(r, 20),
+      Offset(r + newR * piBy4, r - newR * piBy4),
+      firstColor,
       text: "1",
     );
     drawPizza(
       canvas,
       size,
-      Offset(r + r * piBy4, r - r * piBy4),
-      Offset(d, r),
-      Colors.blue,
+      Offset(r + newR * piBy4, r - newR * piBy4),
+      Offset(d - 20, r),
+      secondColor,
       text: "2",
     );
     drawPizza(
       canvas,
       size,
-      Offset(d, r),
-      Offset(r + r * piBy4, r + r * piBy4),
-      Colors.yellow,
+      Offset(d - 20, r),
+      Offset(r + newR * piBy4, r + newR * piBy4),
+      firstColor,
       text: "3",
     );
     drawPizza(
       canvas,
       size,
-      Offset(r + r * piBy4, r + r * piBy4),
-      Offset(r, d),
-      Colors.blueGrey,
+      Offset(r + newR * piBy4, r + newR * piBy4),
+      Offset(r, d - 20),
+      secondColor,
       text: "4",
     );
     drawPizza(
       canvas,
       size,
-      Offset(r, d),
-      Offset(r - r * piBy4, r + r * piBy4),
-      Colors.pink,
+      Offset(r, d - 20),
+      Offset(r - newR * piBy4, r + newR * piBy4),
+      firstColor,
       text: "5",
     );
     drawPizza(
       canvas,
       size,
-      Offset(r - r * piBy4, r + r * piBy4),
-      Offset(0, r),
-      Colors.orange,
+      Offset(r - newR * piBy4, r + newR * piBy4),
+      Offset(20, r),
+      secondColor,
       text: "6",
     );
     drawPizza(
       canvas,
       size,
-      Offset(0, r),
-      Offset(r - r * piBy4, r - r * piBy4),
-      Colors.yellow,
+      Offset(20, r),
+      Offset(r - newR * piBy4, r - newR * piBy4),
+      firstColor,
       text: "7",
     );
     drawPizza(
       canvas,
       size,
-      Offset(r - r * piBy4, r - r * piBy4),
-      Offset(r, 0),
-      Colors.white,
+      Offset(r - newR * piBy4, r - newR * piBy4),
+      Offset(r, 20),
+      secondColor,
       text: "8",
     );
   }
@@ -95,6 +173,7 @@ class SpinWheelPainter extends CustomPainter {
       style: const TextStyle(
         color: Colors.black,
         fontSize: 30,
+        fontWeight: FontWeight.bold,
       ),
     );
     final textPainter = TextPainter(

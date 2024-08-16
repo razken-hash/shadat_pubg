@@ -7,10 +7,12 @@ import 'package:shadat_pubg/views/themes/colors.dart';
 
 class PubgScaffold extends Scaffold {
   final Widget? content;
+  final String backgroundImage;
 
   PubgScaffold({
     super.key,
     this.content,
+    this.backgroundImage = "pubg_1",
     super.appBar,
     super.floatingActionButton,
     super.floatingActionButtonLocation,
@@ -24,11 +26,11 @@ class PubgScaffold extends Scaffold {
     super.bottomNavigationBar,
     super.bottomSheet,
     super.backgroundColor,
-    super.resizeToAvoidBottomInset,
+    super.resizeToAvoidBottomInset = false,
     super.primary,
     super.drawerDragStartBehavior,
-    super.extendBody,
-    super.extendBodyBehindAppBar,
+    super.extendBody = false,
+    super.extendBodyBehindAppBar = false,
     super.drawerScrimColor,
     super.drawerEdgeDragWidth,
     super.drawerEnableOpenDragGesture,
@@ -39,39 +41,12 @@ class PubgScaffold extends Scaffold {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                  AssetsManager.getImage("pubg_fighter"),
+                  AssetsManager.getImage(backgroundImage),
                 ),
                 fit: BoxFit.fitHeight,
               ),
             ),
-            child: Expanded(
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    top: 0,
-                    child: Transform.rotate(
-                      angle: pi,
-                      child: SvgPicture.asset(
-                        fit: BoxFit.fitWidth,
-                        color: PubgColors.secondaryColor.withOpacity(.75),
-                        AssetsManager.getVector("floor"),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    bottom: 0,
-                    child: SvgPicture.asset(
-                      fit: BoxFit.fitWidth,
-                      color: PubgColors.secondaryColor.withOpacity(.75),
-                      AssetsManager.getVector("floor"),
-                    ),
-                  ),
-                  Center(child: content),
-                ],
-              ),
-            ),
+            child: Center(child: content),
           ),
         );
 }
