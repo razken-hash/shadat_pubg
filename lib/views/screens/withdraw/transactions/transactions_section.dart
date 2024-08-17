@@ -14,7 +14,6 @@ class TransactionsSection extends StatelessWidget {
     return FutureBuilder<List<String>>(
       future: loadTransactions(),
       builder: (context, snapshot) {
-        print(snapshot);
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return const Center(

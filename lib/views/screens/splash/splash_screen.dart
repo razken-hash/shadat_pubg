@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/screens/auth/auth_screen.dart';
+import 'package:shadat_pubg/views/screens/pubg_screen.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 
@@ -52,7 +54,23 @@ class _SplashScreenState extends State<SplashScreen> {
               onEnd: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (_) => const AuthScreen()),
+                  MaterialPageRoute(builder: (_) {
+                    return StreamBuilder(
+                      stream: AuthenticationProvider.authStateChanges,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return const PubgScreen();
+                        } else if (snapshot.hasError) {
+                          return const AuthScreen();
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const AuthScreen();
+                        } else {
+                          return const AuthScreen();
+                        }
+                      },
+                    );
+                  }),
                 );
               },
             ),
