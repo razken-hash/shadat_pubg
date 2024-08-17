@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'dart:collection';
 
@@ -8,6 +10,7 @@ import 'package:shadat_pubg/views/screens/home/home_screen.dart';
 import 'package:shadat_pubg/views/screens/invite_friends/invite_friends_screen.dart';
 import 'package:shadat_pubg/views/screens/profile/profile_screen.dart';
 import 'package:shadat_pubg/views/screens/withdraw/withdraw_screen.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DrawerProvider extends ChangeNotifier {
   final List<DrawerItem> _drawerItems = [
@@ -100,6 +103,13 @@ class DrawerProvider extends ChangeNotifier {
 
   void launchWhatsApp() {
     WhatsAppService.launchWhatsApp();
+  }
+
+  void shareApp() async {
+    final result = await Share.share('تطبيق شدات رائع');
+    if (result.status == ShareResultStatus.success) {
+      log('شكرا على مشاركة تطبيق شدات');
+    }
   }
 }
 

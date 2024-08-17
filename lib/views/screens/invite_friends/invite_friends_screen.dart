@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
+import 'package:share_plus/share_plus.dart';
 
 class InviteFriendsScreen extends StatelessWidget {
   const InviteFriendsScreen({super.key});
@@ -75,14 +78,29 @@ class InviteFriendsScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  prefixIcon: SvgPicture.asset(
-                    AssetsManager.getVector(
-                      "document",
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SvgPicture.asset(
+                      AssetsManager.getVector(
+                        "document",
+                      ),
                     ),
                   ),
-                  suffixIcon: SvgPicture.asset(
-                    AssetsManager.getVector(
-                      "document",
+                  suffixIcon: InkWell(
+                    onTap: () async {
+                      final result = await Share.share('123456');
+                      if (result.status == ShareResultStatus.success) {}
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Transform.rotate(
+                        angle: -pi / 2,
+                        child: SvgPicture.asset(
+                          AssetsManager.getVector(
+                            "send",
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -111,7 +111,7 @@ class PubgDrawer extends StatelessWidget {
                               if (index == 1) {
                                 drawerProvider.launchWhatsApp();
                               } else {
-                                //TODO: drawerProvider.shareApp();
+                                drawerProvider.shareApp();
                               }
                             }
 
