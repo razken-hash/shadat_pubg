@@ -74,6 +74,8 @@ class InviteFriendsScreen extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: .6,
               child: TextField(
+                focusNode: FocusNode(),
+                enableInteractiveSelection: false,
                 controller: TextEditingController(
                   text: "123456",
                 ),

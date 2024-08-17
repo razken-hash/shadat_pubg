@@ -45,85 +45,87 @@ class PubgDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(24, 32, 0, 16),
-                      child: Text(
-                        "تصفح",
-                        style: TextStyle(
-                          color: PubgColors.whiteColor.withOpacity(.7),
-                          fontSize: 17,
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(24, 32, 0, 16),
+                        child: Text(
+                          "تصفح",
+                          style: TextStyle(
+                            color: PubgColors.whiteColor.withOpacity(.7),
+                            fontSize: 17,
+                          ),
                         ),
                       ),
-                    ),
-                    ...List.generate(
-                      drawerProvider.browseDrawerItems.length,
-                      (index) {
-                        DrawerItem drawerItem =
-                            drawerProvider.browseDrawerItems[index];
-                        return PubgDrawerTile(
-                          drawerItem: drawerItem,
-                          isSelected: drawerItem.screen.runtimeType ==
-                              drawerProvider.currentScreen.runtimeType,
-                          onItemSelected: () {
-                            drawerProvider.navigateTo(drawerItem.screen);
-                            Future.delayed(const Duration(milliseconds: 200))
-                                .then(
-                              (v) {
-                                onItemSelected();
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(24, 64, 0, 16),
-                      child: Text(
-                        "أيضا",
-                        style: TextStyle(
-                          color: PubgColors.whiteColor.withOpacity(.7),
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                    ...[],
-                    ...List.generate(
-                      drawerProvider.moreDrawerItems.length,
-                      (index) {
-                        DrawerItem drawerItem =
-                            drawerProvider.moreDrawerItems[index];
-                        return PubgDrawerTile(
-                          drawerItem: drawerItem,
-                          isSelected: drawerItem.screen.runtimeType ==
-                              drawerProvider.currentScreen.runtimeType,
-                          onItemSelected: () {
-                            if (index == 0) {
+                      ...List.generate(
+                        drawerProvider.browseDrawerItems.length,
+                        (index) {
+                          DrawerItem drawerItem =
+                              drawerProvider.browseDrawerItems[index];
+                          return PubgDrawerTile(
+                            drawerItem: drawerItem,
+                            isSelected: drawerItem.screen.runtimeType ==
+                                drawerProvider.currentScreen.runtimeType,
+                            onItemSelected: () {
                               drawerProvider.navigateTo(drawerItem.screen);
-                            } else {
-                              drawerProvider.navigateTo(
-                                  drawerProvider.screens[0],
-                                  index: 0);
-                              if (index == 1) {
-                                drawerProvider.launchWhatsApp();
+                              Future.delayed(const Duration(milliseconds: 200))
+                                  .then(
+                                (v) {
+                                  onItemSelected();
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(24, 64, 0, 16),
+                        child: Text(
+                          "أيضا",
+                          style: TextStyle(
+                            color: PubgColors.whiteColor.withOpacity(.7),
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      ...[],
+                      ...List.generate(
+                        drawerProvider.moreDrawerItems.length,
+                        (index) {
+                          DrawerItem drawerItem =
+                              drawerProvider.moreDrawerItems[index];
+                          return PubgDrawerTile(
+                            drawerItem: drawerItem,
+                            isSelected: drawerItem.screen.runtimeType ==
+                                drawerProvider.currentScreen.runtimeType,
+                            onItemSelected: () {
+                              if (index == 0) {
+                                drawerProvider.navigateTo(drawerItem.screen);
                               } else {
-                                drawerProvider.shareApp();
+                                drawerProvider.navigateTo(
+                                    drawerProvider.screens[0],
+                                    index: 0);
+                                if (index == 1) {
+                                  drawerProvider.launchWhatsApp();
+                                } else {
+                                  drawerProvider.shareApp();
+                                }
                               }
-                            }
 
-                            Future.delayed(const Duration(milliseconds: 200))
-                                .then((v) {
-                              onItemSelected();
-                            });
-                          },
-                        );
-                      },
-                    ),
-                  ],
+                              Future.delayed(const Duration(milliseconds: 200))
+                                  .then((v) {
+                                onItemSelected();
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

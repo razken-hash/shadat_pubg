@@ -1,4 +1,4 @@
-package com.example.shadat_pubg
+package com.shadat.pubg
 
 import io.flutter.embedding.android.FlutterActivity
 

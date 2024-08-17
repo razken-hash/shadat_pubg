@@ -21,7 +21,7 @@ class PubgDrawerTile extends StatelessWidget {
     return Column(
       children: [
         const Padding(
-          padding: EdgeInsets.only(left: 24),
+          padding: EdgeInsetsDirectional.only(start: 10),
           child: Divider(color: Colors.white24, height: 20),
         ),
         Stack(
@@ -38,20 +38,27 @@ class PubgDrawerTile extends StatelessWidget {
                 ),
               ),
             ),
-            ListTile(
-              onTap: () {
-                onItemSelected();
-              },
-              leading: SvgPicture.asset(
-                width: 35,
-                fit: BoxFit.fitWidth,
-                AssetsManager.getVector(drawerItem.icon),
-                color: PubgColors.whiteColor,
-              ),
-              title: Text(
-                drawerItem.label,
-                style: const TextStyle(
-                  color: PubgColors.whiteColor,
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: 10),
+              child: ListTile(
+                onTap: () {
+                  onItemSelected();
+                },
+                leading: SvgPicture.asset(
+                  width: 35,
+                  fit: BoxFit.fitWidth,
+                  AssetsManager.getVector(drawerItem.icon),
+                  color: isSelected
+                      ? PubgColors.primaryColor
+                      : PubgColors.whiteColor,
+                ),
+                title: Text(
+                  drawerItem.label,
+                  style: TextStyle(
+                    color: isSelected
+                        ? PubgColors.primaryColor
+                        : PubgColors.whiteColor,
+                  ),
                 ),
               ),
             ),
