@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,6 +6,7 @@ import 'package:shadat_pubg/models/gamer.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   static final _firebaseAuth = FirebaseAuth.instance;
+  static final _firebaseStore = FirebaseFirestore.instance;
 
   static User? get currentUser => _firebaseAuth.currentUser;
 
@@ -14,15 +14,29 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Gamer? gamer;
 
-  void createGamer(User user) {
-    gamer = Gamer(
-      id: user.uid,
-      name: user.displayName ?? "",
-      email: user.email ?? "",
-      code: "123456",
-      shadat: 0,
-      picture: user.photoURL ?? "",
-    );
+  void createGamer(User user) async {
+    final DocumentReference document =
+        _firebaseStore.collection("gamers").doc(user.uid);
+
+    await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
+      dynamic data = snapshot.data();
+      gamer = Gamer(
+        id: user.uid,
+        name: user.displayName ?? "",
+        email: user.email ?? "",
+        code: data["gamerCode"],
+        points: data["points"],
+        picture: user.photoURL ?? "",
+      );
+    });
+  }
+
+  void updatePoints({required int points}) async {
+    gamer!.points += points;
+    final DocumentReference document =
+        _firebaseStore.collection("gamers").doc(gamer!.id);
+    await document.update({"points": gamer!.points});
+    notifyListeners();
   }
 
   Future<Gamer?> signIn() async {
@@ -47,7 +61,7 @@ class AuthenticationProvider extends ChangeNotifier {
           name: userCredential.user!.displayName ?? "",
           email: userCredential.user!.email ?? "",
           code: "123456",
-          shadat: 0,
+          points: 0,
           picture: userCredential.user!.photoURL ?? "",
         );
       }

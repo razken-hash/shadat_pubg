@@ -3,16 +3,16 @@ class Gamer {
   final String id;
   final String name;
   final String email;
-  final String code;
-  final int shadat;
+  String code;
+  int points;
   final String picture;
 
   Gamer({
     required this.id,
     required this.name,
     required this.email,
-    required this.code,
-    required this.shadat,
+    this.code = "",
+    this.points = 0,
     required this.picture,
   });
 }

@@ -66,9 +66,9 @@ class ProfileScreen extends StatelessWidget {
                 color: PubgColors.primaryColor,
               ),
               const SizedBox(height: 15),
-              const Text(
-                "عدد الشدات لديك: 101 شدة",
-                style: TextStyle(
+              Text(
+                "عدد الشدات لديك: ${authenticationProvider.gamer!.points} شدة",
+                style: const TextStyle(
                   color: PubgColors.blackColor,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
