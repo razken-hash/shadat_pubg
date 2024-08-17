@@ -48,19 +48,20 @@ class DrawerProvider extends ChangeNotifier {
     ),
   ];
 
-  UnmodifiableListView get drawerItems => UnmodifiableListView(_drawerItems);
+  UnmodifiableListView<DrawerItem> get drawerItems =>
+      UnmodifiableListView(_drawerItems);
 
-  UnmodifiableListView get browseDrawerItems =>
+  UnmodifiableListView<DrawerItem> get browseDrawerItems =>
       UnmodifiableListView(_drawerItems.sublist(0, 4));
 
-  UnmodifiableListView get moreDrawerItems =>
+  UnmodifiableListView<DrawerItem> get moreDrawerItems =>
       UnmodifiableListView(_drawerItems.sublist(4, _drawerItems.length));
 
-  UnmodifiableListView get screens =>
+  UnmodifiableListView<Widget> get screens =>
       UnmodifiableListView(_drawerItems.map((i) => i.screen).toList());
-  UnmodifiableListView get labels =>
+  UnmodifiableListView<String> get labels =>
       UnmodifiableListView(_drawerItems.map((i) => i.label).toList());
-  UnmodifiableListView get icons =>
+  UnmodifiableListView<String> get icons =>
       UnmodifiableListView(_drawerItems.map((i) => i.icon).toList());
 
   late int _currentIndex;

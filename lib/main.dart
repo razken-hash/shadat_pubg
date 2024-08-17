@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shadat_pubg/views/config/internationalization.dart';
+import 'package:shadat_pubg/views/screens/pubg_screen.dart';
 import 'package:shadat_pubg/views/screens/splash/splash_screen.dart';
 import 'package:shadat_pubg/views/themes/themes.dart';
 
@@ -20,7 +21,7 @@ class ShadatPubg extends StatelessWidget {
       localizationsDelegates: [myLocalizationDelegate],
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      home: const SplashScreen(),
+      home: const PubgScreen(),
     );
   }
 }

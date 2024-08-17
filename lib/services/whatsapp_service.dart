@@ -1,30 +1,15 @@
-import 'dart:io';
-
 import 'package:url_launcher/url_launcher.dart';
+import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 class WhatsAppService {
   static Future<void> launchWhatsApp({
     String contact = "+90000000000",
-    String message = "",
+    String message = "السلام عليكم، أحتاج مساعدة",
   }) async {
-    String androidUrl = "whatsapp://send?phone=$contact&text=$message";
-    String iosUrl = "https://wa.me/$contact?text=${Uri.parse(message)}";
-
-    String webUrl =
-        'https://api.whatsapp.com/send/?phone=$contact&text=$message';
-
-    try {
-      if (Platform.isIOS) {
-        if (await canLaunchUrl(Uri.parse(iosUrl))) {
-          await launchUrl(Uri.parse(iosUrl));
-        }
-      } else if (Platform.isAndroid) {
-        if (await canLaunchUrl(Uri.parse(androidUrl))) {
-          await launchUrl(Uri.parse(androidUrl));
-        }
-      }
-    } catch (e) {
-      await launchUrl(Uri.parse(webUrl), mode: LaunchMode.externalApplication);
-    }
+    WhatsAppUnilink link = WhatsAppUnilink(
+      phoneNumber: contact,
+      text: message,
+    );
+    await launchUrl(link.asUri());
   }
 }

@@ -105,8 +105,9 @@ class PubgDrawer extends StatelessWidget {
                             if (index == 0) {
                               drawerProvider.navigateTo(drawerItem.screen);
                             } else {
-                              drawerProvider
-                                  .navigateTo(drawerProvider.drawerItems[0]);
+                              drawerProvider.navigateTo(
+                                  drawerProvider.screens[0],
+                                  index: 0);
                               if (index == 1) {
                                 drawerProvider.launchWhatsApp();
                               } else {
