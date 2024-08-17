@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
@@ -78,11 +79,18 @@ class InviteFriendsScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(
-                      AssetsManager.getVector(
-                        "document",
+                  prefixIcon: InkWell(
+                    onTap: () {
+                      FlutterClipboard.copy('123456').then(
+                        (value) {},
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SvgPicture.asset(
+                        AssetsManager.getVector(
+                          "document",
+                        ),
                       ),
                     ),
                   ),
