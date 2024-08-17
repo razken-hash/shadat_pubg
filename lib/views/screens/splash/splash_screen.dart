@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/screens/auth/auth_screen.dart';
 import 'package:shadat_pubg/views/screens/pubg_screen.dart';
@@ -59,7 +61,12 @@ class _SplashScreenState extends State<SplashScreen> {
                       stream: AuthenticationProvider.authStateChanges,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return const PubgScreen();
+                          User user = snapshot.data!;
+                          return ChangeNotifierProvider<AuthenticationProvider>(
+                            create: (context) =>
+                                AuthenticationProvider()..createGamer(user),
+                            child: const PubgScreen(),
+                          );
                         } else if (snapshot.hasError) {
                           return const AuthScreen();
                         } else if (snapshot.connectionState ==

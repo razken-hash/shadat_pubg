@@ -55,106 +55,109 @@ class _PubgScreenState extends State<PubgScreen>
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DrawerProvider>(
       create: (context) => DrawerProvider(),
-      child: Consumer<DrawerProvider>(
-        builder: (context, drawerProvider, child) {
-          return PopScope(
-            canPop: !drawerProvider.isDrawerOpened,
-            onPopInvoked: (didPop) {
-              if (drawerProvider.isDrawerOpened) {
-                drawerProvider.controlDrawer(_animationController);
-              }
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    AssetsManager.getImage("pubg_3"),
-                  ),
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-              child: Scaffold(
-                extendBody: false,
-                resizeToAvoidBottomInset: false,
-                extendBodyBehindAppBar: false,
-                backgroundColor: PubgColors.primaryColor.withOpacity(.5),
-                body: Stack(
-                  children: [
-                    AnimatedPositionedDirectional(
-                      curve: Curves.fastOutSlowIn,
-                      duration: const Duration(milliseconds: 500),
-                      start: drawerProvider.isDrawerOpened ? 0 : -288,
-                      child: PubgDrawer(
-                        onItemSelected: () {
-                          drawerProvider.controlDrawer(_animationController);
-                        },
-                      ),
+      child: ChangeNotifierProvider<DrawerProvider>(
+        create: (context) => DrawerProvider(),
+        child: Consumer<DrawerProvider>(
+          builder: (context, drawerProvider, child) {
+            return PopScope(
+              canPop: !drawerProvider.isDrawerOpened,
+              onPopInvoked: (didPop) {
+                if (drawerProvider.isDrawerOpened) {
+                  drawerProvider.controlDrawer(_animationController);
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      AssetsManager.getImage("pubg_3"),
                     ),
-                    Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.identity()
-                        ..setEntry(3, 2, 0.001)
-                        ..rotateY(_animation.value -
-                            (Directionality.of(context) == TextDirection.ltr
-                                    ? 30
-                                    : 85) *
-                                _animation.value *
-                                pi /
-                                180),
-                      child: Transform.translate(
-                        offset: Offset(
-                            (Directionality.of(context) == TextDirection.ltr
-                                    ? 1
-                                    : -1) *
-                                _animation.value *
-                                265,
-                            0),
-                        child: Transform.scale(
-                          scale: _scaleAnimation.value,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(_animation.value * 25)),
-                            child: Scaffold(
-                              extendBody: false,
-                              resizeToAvoidBottomInset: false,
-                              extendBodyBehindAppBar: false,
-                              backgroundColor: Colors.transparent,
-                              body: Stack(
-                                children: [
-                                  Center(
-                                    child: drawerProvider.currentScreen,
-                                  ),
-                                  SafeArea(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 10),
-                                      child: InkWell(
-                                        onTap: () {
-                                          drawerProvider.controlDrawer(
-                                              _animationController);
-                                        },
-                                        child: SvgPicture.asset(
-                                          width: 40,
-                                          fit: BoxFit.fitWidth,
-                                          color: PubgColors.whiteColor,
-                                          AssetsManager.getVector("menu"),
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                child: Scaffold(
+                  extendBody: false,
+                  resizeToAvoidBottomInset: false,
+                  extendBodyBehindAppBar: false,
+                  backgroundColor: PubgColors.primaryColor.withOpacity(.5),
+                  body: Stack(
+                    children: [
+                      AnimatedPositionedDirectional(
+                        curve: Curves.fastOutSlowIn,
+                        duration: const Duration(milliseconds: 500),
+                        start: drawerProvider.isDrawerOpened ? 0 : -288,
+                        child: PubgDrawer(
+                          onItemSelected: () {
+                            drawerProvider.controlDrawer(_animationController);
+                          },
+                        ),
+                      ),
+                      Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.001)
+                          ..rotateY(_animation.value -
+                              (Directionality.of(context) == TextDirection.ltr
+                                      ? 30
+                                      : 85) *
+                                  _animation.value *
+                                  pi /
+                                  180),
+                        child: Transform.translate(
+                          offset: Offset(
+                              (Directionality.of(context) == TextDirection.ltr
+                                      ? 1
+                                      : -1) *
+                                  _animation.value *
+                                  265,
+                              0),
+                          child: Transform.scale(
+                            scale: _scaleAnimation.value,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(_animation.value * 25)),
+                              child: Scaffold(
+                                extendBody: false,
+                                resizeToAvoidBottomInset: false,
+                                extendBodyBehindAppBar: false,
+                                backgroundColor: Colors.transparent,
+                                body: Stack(
+                                  children: [
+                                    Center(
+                                      child: drawerProvider.currentScreen,
+                                    ),
+                                    SafeArea(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20.0, vertical: 10),
+                                        child: InkWell(
+                                          onTap: () {
+                                            drawerProvider.controlDrawer(
+                                                _animationController);
+                                          },
+                                          child: SvgPicture.asset(
+                                            width: 40,
+                                            fit: BoxFit.fitWidth,
+                                            color: PubgColors.whiteColor,
+                                            AssetsManager.getVector("menu"),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

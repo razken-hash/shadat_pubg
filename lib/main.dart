@@ -28,23 +28,11 @@ class ShadatPubg extends StatelessWidget {
     final MyLocalizationDelegate myLocalizationDelegate =
         MyLocalizationDelegate(myLocalization);
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AuthenticationProvider>(
-          create: (context) => AuthenticationProvider(),
-        ),
-        ChangeNotifierProvider<DrawerProvider>(
-          create: (context) => DrawerProvider(),
-        ),
-      ],
-      builder: (context, child) {
-        return MaterialApp(
-          localizationsDelegates: [myLocalizationDelegate],
-          debugShowCheckedModeBanner: false,
-          theme: lightTheme,
-          home: const SplashScreen(),
-        );
-      },
+    return MaterialApp(
+      localizationsDelegates: [myLocalizationDelegate],
+      debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      home: const SplashScreen(),
     );
   }
 }

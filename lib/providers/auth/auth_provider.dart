@@ -14,13 +14,21 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Gamer? gamer;
 
+  void createGamer(User user) {
+    gamer = Gamer(
+      id: user.uid,
+      name: user.displayName ?? "",
+      email: user.email ?? "",
+      code: "123456",
+      shadat: 0,
+      picture: user.photoURL ?? "",
+    );
+  }
+
   Future<Gamer?> signIn() async {
     Gamer? gamer;
     try {
-      log("HE");
-
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      log("HE");
 
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
@@ -30,12 +38,9 @@ class AuthenticationProvider extends ChangeNotifier {
         idToken: googleAuth?.idToken,
       );
 
-      log("HE");
-
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
 
-      log("Hin");
       if (userCredential.user != null) {
         gamer = Gamer(
           id: userCredential.user!.uid,

@@ -31,23 +31,31 @@ class ProfileScreen extends StatelessWidget {
                 radius: 64,
                 child: CircleAvatar(
                   radius: 60,
-                  foregroundImage: AssetImage(AssetsManager.getImage("person")),
+                  backgroundColor: Colors.white24,
+                  foregroundImage: NetworkImage(
+                    authenticationProvider.gamer!.picture,
+                  ),
+                  backgroundImage: AssetImage(
+                    AssetsManager.getImage(
+                      "person",
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 15),
-              const Text(
-                "ABDERRAZAK KENNICHE",
+              Text(
+                authenticationProvider.gamer!.name,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: PubgColors.blackColor,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "ka_kenniche@esi.dz",
-                style: TextStyle(
+              Text(
+                authenticationProvider.gamer!.email,
+                style: const TextStyle(
                   color: PubgColors.blackColor,
                   fontSize: 15,
                   fontWeight: FontWeight.bold,

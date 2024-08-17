@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/providers/drawer/drawer_item.dart';
 import 'package:shadat_pubg/providers/drawer/drawer_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
@@ -25,26 +26,31 @@ class PubgDrawer extends StatelessWidget {
           child: SafeArea(
             child: Column(
               children: [
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.white24,
-                    radius: 20,
-                    foregroundImage: AssetImage(
-                      AssetsManager.getImage("person"),
+                Consumer<AuthenticationProvider>(
+                    builder: (context, authenticationProvider, child) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.white24,
+                      radius: 20,
+                      foregroundImage: NetworkImage(
+                        authenticationProvider.gamer!.picture,
+                      ),
+                      backgroundImage: AssetImage(
+                        AssetsManager.getImage(
+                          "person",
+                        ),
+                      ),
                     ),
-                    child: const Icon(
-                      CupertinoIcons.person,
+                    title: Text(
+                      authenticationProvider.gamer!.name,
+                      style: const TextStyle(color: Colors.white),
                     ),
-                  ),
-                  title: const Text(
-                    "AbdErrazak KENNICHE",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  subtitle: const Text(
-                    "PUBG Enthausiast",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+                    subtitle: const Text(
+                      "PUBG Enthausiast",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  );
+                }),
                 SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

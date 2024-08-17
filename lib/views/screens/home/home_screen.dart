@@ -123,9 +123,7 @@ class _HomeScreenState extends State<HomeScreen>
                   _animationController.reverse();
                 }
                 setState(() {
-                  turns = turns < 2
-                      ? 11 + 0.0625 * (Random().nextInt(1000) * 2 + 1)
-                      : 0.0625 * (Random().nextInt(1000) * 2 + 1);
+                  turns = 20 + 0.0625 * (Random().nextInt(1000) * 2 + 1);
                 });
               },
               icon: const Icon(
