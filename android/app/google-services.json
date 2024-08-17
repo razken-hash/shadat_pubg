@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "357638402694",
+    "project_id": "uc-03-3c481",
+    "storage_bucket": "uc-03-3c481.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357638402694:android:a5f5d3b282aa5f50125707",
+        "android_client_info": {
+          "package_name": "com.shadat.pubg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357638402694-bdunopktdeen34sseenqmoolcram1krs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shadat.pubg",
+            "certificate_hash": "37a0b3f3bce8a35a87e9702c09536ebc12436a8c"
+          }
+        },
+        {
+          "client_id": "357638402694-doi94s335nun41psu2sliaovqjoa6lsu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAGUCZNv3Ot6l_6WxdegzsVjX7NdrA05U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357638402694-doi94s335nun41psu2sliaovqjoa6lsu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

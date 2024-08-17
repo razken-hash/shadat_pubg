@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
 import 'package:shadat_pubg/views/screens/pubg_screen.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
@@ -14,7 +16,7 @@ class AuthScreen extends StatelessWidget {
       content: Directionality(
         textDirection: TextDirection.rtl,
         child: TextButton.icon(
-          onPressed: () {
+          onPressed: () async {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
