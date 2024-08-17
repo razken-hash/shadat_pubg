@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shadat_pubg/views/themes/colors.dart';
 
 import 'dart:ui' as ui;
 
@@ -17,7 +16,6 @@ class SpinWheelPointerPainter extends CustomPainter {
       Rect.fromLTWH(r - 40, r - 40, 80, 80),
       paint,
     );
-    // paint.color = Colors.black;
     paint.shader = null;
 
     path.moveTo(r - 20, r - 30);

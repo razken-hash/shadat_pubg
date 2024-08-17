@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
-import 'package:shadat_pubg/views/themes/colors.dart';
 
 class PubgScaffold extends Scaffold {
   final Widget? content;

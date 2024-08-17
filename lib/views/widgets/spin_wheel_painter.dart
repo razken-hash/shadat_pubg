@@ -82,7 +82,6 @@ class SpinWheelPainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     double newR = r - 20;
-    double newD = r - 40;
 
     Color firstColor = const Color(0xFFF1DEBD),
         secondColor = const Color(0xFFF4F4F4);

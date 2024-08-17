@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
@@ -12,6 +11,9 @@ class InviteFriendsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PubgScaffold(
       backgroundImage: "pubg_2",
+      resizeToAvoidBottomInset: false,
+      extendBody: false,
+      extendBodyBehindAppBar: false,
       content: Container(
         height: 600,
         width: double.infinity,

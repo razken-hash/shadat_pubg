@@ -1,7 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:shadat_pubg/views/config/assets_manager.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 import 'package:shadat_pubg/views/widgets/spin_wheel_painter.dart';

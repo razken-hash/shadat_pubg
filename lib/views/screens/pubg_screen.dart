@@ -115,6 +115,9 @@ class _PubgScreenState extends State<PubgScreen>
                             borderRadius: BorderRadius.all(
                                 Radius.circular(_animation.value * 25)),
                             child: Scaffold(
+                              extendBody: false,
+                              resizeToAvoidBottomInset: false,
+                              extendBodyBehindAppBar: false,
                               backgroundColor: Colors.transparent,
                               body: Stack(
                                 children: [

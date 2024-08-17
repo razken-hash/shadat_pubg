@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
-import 'package:shadat_pubg/views/screens/home/home_screen.dart';
 import 'package:shadat_pubg/views/screens/pubg_screen.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
