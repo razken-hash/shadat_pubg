@@ -29,6 +29,7 @@ class AuthenticationProvider extends ChangeNotifier {
         picture: user.photoURL ?? "",
       );
     });
+    notifyListeners();
   }
 
   void updatePoints({required int points}) async {

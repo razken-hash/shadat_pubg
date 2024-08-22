@@ -20,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     Future.delayed(const Duration(seconds: 1)).then((_) {
       setState(() {
         progress = 200;
@@ -48,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Align(
             alignment: Alignment.centerLeft,
             child: AnimatedContainer(
-              duration: const Duration(seconds: 3),
+              duration: const Duration(seconds: 1),
               curve: Curves.easeInToLinear,
               color: PubgColors.tertiaryColor,
               width: progress,
