@@ -14,7 +14,7 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Gamer? gamer;
 
-  void createGamer(User user) async {
+  Future<void> createGamer(User user) async {
     final DocumentReference document =
         _firebaseStore.collection("gamers").doc(user.uid);
 
@@ -65,6 +65,7 @@ class AuthenticationProvider extends ChangeNotifier {
           points: 0,
           picture: userCredential.user!.photoURL ?? "",
         );
+        notifyListeners();
       }
     } on Exception catch (e) {}
     return gamer;

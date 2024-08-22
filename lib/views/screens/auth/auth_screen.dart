@@ -12,48 +12,45 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AuthenticationProvider>(
-      create: (context) => AuthenticationProvider(),
-      child: Consumer<AuthenticationProvider>(
-          builder: (context, authenticationProvider, child) {
-        return PubgScaffold(
-          content: Directionality(
-            textDirection: TextDirection.rtl,
-            child: TextButton.icon(
-              onPressed: () async {
-                authenticationProvider.signIn().then((gamer) {
-                  if (gamer != null) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const PubgScreen(),
+    return Consumer<AuthenticationProvider>(
+        builder: (context, authenticationProvider, child) {
+      return PubgScaffold(
+        content: Directionality(
+          textDirection: TextDirection.rtl,
+          child: TextButton.icon(
+            onPressed: () async {
+              authenticationProvider.signIn().then((gamer) {
+                if (gamer != null) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const PubgScreen(),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "لم يتم تسجيل الدخول، أعد المحاولة",
                       ),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          "لم يتم تسجيل الدخول، أعد المحاولة",
-                        ),
-                      ),
-                    );
-                  }
-                });
-              },
-              icon: SvgPicture.asset(
-                AssetsManager.getVector("google"),
-                width: 30,
-              ),
-              label: const Text(
-                "تسجيل الدخول",
-                style: TextStyle(
-                  color: PubgColors.whiteColor,
-                ),
+                    ),
+                  );
+                }
+              });
+            },
+            icon: SvgPicture.asset(
+              AssetsManager.getVector("google"),
+              width: 30,
+            ),
+            label: const Text(
+              "تسجيل الدخول",
+              style: TextStyle(
+                color: PubgColors.whiteColor,
               ),
             ),
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }

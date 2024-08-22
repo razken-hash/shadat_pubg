@@ -54,32 +54,32 @@ class _SplashScreenState extends State<SplashScreen> {
               color: PubgColors.tertiaryColor,
               width: progress,
               height: 20,
-              onEnd: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) {
-                    return StreamBuilder(
-                      stream: AuthenticationProvider.authStateChanges,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          User user = snapshot.data!;
-                          return ChangeNotifierProvider<AuthenticationProvider>(
-                            create: (context) =>
-                                AuthenticationProvider()..createGamer(user),
-                            child: const PubgScreen(),
-                          );
-                        } else if (snapshot.hasError) {
-                          return const AuthScreen();
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const AuthScreen();
-                        } else {
-                          return const AuthScreen();
-                        }
-                      },
+              onEnd: () async {
+                final stream = AuthenticationProvider.authStateChanges;
+                await stream.firstWhere((User? user) {
+                  if (user != null) {
+                    Provider.of<AuthenticationProvider>(context, listen: false)
+                        .createGamer(user)
+                        .then((value) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const PubgScreen()),
+                      );
+                      return true; // Stop listening after navigating
+                    });
+                  } else {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const AuthScreen()),
                     );
-                  }),
-                );
+                  }
+                  return false;
+                }).catchError((error) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const AuthScreen()),
+                  );
+                });
               },
             ),
           ),
