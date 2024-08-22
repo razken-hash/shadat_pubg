@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
@@ -131,18 +130,10 @@ class _HomeScreenState extends State<HomeScreen>
                         20 +
                         0.0625 * (Random().nextInt(8) * 2 + 1);
                   });
-                  dev.log("turns = $turns");
-                  double a = turns -
-                      (index * 0.0625 - (turns == 0 ? 0 : 0.0625)) -
-                      turns.toInt() -
-                      0.0625;
-                  dev.log("A = $a");
+                  double a = turns - turns.toInt();
                   double b = a / 0.0625;
-                  dev.log("B = $b");
                   int intB = b.toInt();
-                  dev.log("intB = $intB");
-                  index = (7 - intB ~/ 2);
-                  dev.log("index: $index");
+                  index = 7 - intB ~/ 2;
                   Future.delayed(const Duration(seconds: 3)).then((value) {
                     authenticationProvider.updatePoints(points: index);
                   });
