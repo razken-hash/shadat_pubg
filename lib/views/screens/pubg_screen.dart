@@ -53,6 +53,7 @@ class _PubgScreenState extends State<PubgScreen>
   @override
   void dispose() {
     _animationController.dispose();
+    player.dispose();
     super.dispose();
   }
 

@@ -1,9 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/home/turner_button.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 import 'package:shadat_pubg/views/widgets/spin_wheel_painter.dart';
@@ -43,7 +47,14 @@ class _HomeScreenState extends State<HomeScreen>
           }
         });
       });
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -92,7 +103,6 @@ class _HomeScreenState extends State<HomeScreen>
                         width: 320,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.red,
                         ),
                         child: CustomPaint(
                           painter: SpinWheelPainter(),
@@ -122,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen>
               const SizedBox(
                 height: 40,
               ),
-              TextButton.icon(
-                onPressed: () async {
+              TurnerButton(
+                onTurn: () async {
                   await spinPlayer.play(
                     AssetSource(
                       AssetsManager.getAudio("spin"),
@@ -149,16 +159,6 @@ class _HomeScreenState extends State<HomeScreen>
                     authenticationProvider.updatePoints(points: index);
                   });
                 },
-                icon: const Icon(
-                  Icons.rotate_left,
-                  color: PubgColors.whiteColor,
-                ),
-                label: const Text(
-                  "تدويــر",
-                  style: TextStyle(
-                    color: PubgColors.whiteColor,
-                  ),
-                ),
               ),
               const Spacer(),
               const Spacer(),

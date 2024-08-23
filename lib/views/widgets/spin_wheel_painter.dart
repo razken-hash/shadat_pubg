@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:shadat_pubg/views/themes/colors.dart';
 
 class SpinWheelPainter extends CustomPainter {
   double piBy4 = cos(pi / 4);
@@ -12,7 +13,7 @@ class SpinWheelPainter extends CustomPainter {
     double c = d * .5;
 
     final paint = Paint();
-    paint.color = const Color(0xFFF3D34A);
+    paint.color = PubgColors.yellowColor;
     Path path = Path();
     path.moveTo(c, c);
     canvas.drawOval(
@@ -20,7 +21,7 @@ class SpinWheelPainter extends CustomPainter {
       paint,
     );
 
-    paint.color = const Color(0xFFF06F1D);
+    paint.color = PubgColors.orangeColor;
 
     canvas.drawOval(
       Rect.fromLTWH(r - 7, 3, 14, 14),
@@ -58,7 +59,7 @@ class SpinWheelPainter extends CustomPainter {
 
     double cosPiBy3 = cos(pi / 3);
     double sinPiBy3 = sin(pi / 3);
-    paint.color = const Color(0xFFF3F6EF);
+    paint.color = PubgColors.whiteColor;
 
     canvas.drawOval(
       Rect.fromLTWH(r + r * cosPiBy3 - 26, r - r * sinPiBy3 - 6, 14, 14),

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'dart:ui' as ui;
 
+import 'package:shadat_pubg/views/themes/colors.dart';
+
 class SpinWheelPointerPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final double d = size.height;
     double r = d * .5;
     final paint = Paint();
-    paint.color = const Color(0xFFF06F1D);
+    paint.color = PubgColors.orangeColor;
 
     Path path = Path();
 
@@ -29,7 +31,7 @@ class SpinWheelPointerPainter extends CustomPainter {
       Offset(r, 0),
       Offset(r, d),
       [
-        const Color(0xFFF3D34A),
+        PubgColors.yellowColor,
         const Color.fromARGB(255, 240, 138, 29),
       ],
     );
@@ -41,7 +43,7 @@ class SpinWheelPointerPainter extends CustomPainter {
     const textSpan = TextSpan(
       text: "WIN",
       style: TextStyle(
-        color: Color(0xFFF06F1D),
+        color: PubgColors.orangeColor,
         fontSize: 25,
         fontWeight: FontWeight.bold,
       ),
