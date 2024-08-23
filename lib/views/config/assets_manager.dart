@@ -29,7 +29,22 @@ class AssetsManager {
     return "$directory/$image.${type.name}";
   }
 
-  static String assetify(
+  static const String defaultAudiosDirectory = "assets/audios";
+  static const String defaultAudio = "default";
+  static const AudioType defaultAudioType = AudioType.mp3;
+
+  static String getAudio(
+    String audio, {
+    String directory = "audios",
+    AudioType type = defaultAudioType,
+  }) {
+    if (audio.isEmpty) {
+      return "$defaultAudiosDirectory/$defaultAudio.${defaultAudioType.name}";
+    }
+    return "$directory/$audio.${type.name}";
+  }
+
+  static String getAsset(
     String file, {
     required directory,
     String? type,
@@ -39,3 +54,5 @@ class AssetsManager {
 }
 
 enum ImageType { png, svg }
+
+enum AudioType { mp3 }

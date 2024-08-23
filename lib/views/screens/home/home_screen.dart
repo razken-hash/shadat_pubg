@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
+import 'package:shadat_pubg/views/config/assets_manager.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 import 'package:shadat_pubg/views/widgets/spin_wheel_painter.dart';
@@ -23,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen>
   double angle = 0;
   bool back = false;
   int index = 0;
+
+  final spinPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -119,7 +123,13 @@ class _HomeScreenState extends State<HomeScreen>
                 height: 40,
               ),
               TextButton.icon(
-                onPressed: () {
+                onPressed: () async {
+                  await spinPlayer.play(
+                    AssetSource(
+                      AssetsManager.getAudio("spin"),
+                    ),
+                  );
+
                   if (_animationController.value == 0) {
                     _animationController.forward();
                   } else {

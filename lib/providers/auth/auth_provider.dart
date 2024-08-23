@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -89,7 +90,9 @@ class AuthenticationProvider extends ChangeNotifier {
       if (userCredential.user != null) {
         gamer = await createGamer(userCredential.user!);
       }
-    } on Exception catch (e) {}
+    } on Exception catch (e) {
+      dev.log(e.toString());
+    }
     return gamer;
   }
 

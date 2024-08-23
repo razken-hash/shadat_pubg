@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,12 @@ class _PubgScreenState extends State<PubgScreen>
   late Animation<double> _animation;
   late Animation<double> _scaleAnimation;
 
+  final player = AudioPlayer();
+
   @override
   void initState() {
+    player.setReleaseMode(ReleaseMode.loop);
+    player.play(AssetSource(AssetsManager.getAudio("background")));
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500))
       ..addListener(() {
