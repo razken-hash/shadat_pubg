@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,22 +16,50 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Gamer? gamer;
 
-  Future<void> createGamer(User user) async {
+  Future<Gamer?> createGamer(User user) async {
     final DocumentReference document =
         _firebaseStore.collection("gamers").doc(user.uid);
 
     await document.get().then<dynamic>((DocumentSnapshot snapshot) async {
-      dynamic data = snapshot.data();
-      gamer = Gamer(
-        id: user.uid,
-        name: user.displayName ?? "",
-        email: user.email ?? "",
-        code: data["gamerCode"],
-        points: data["points"],
-        picture: user.photoURL ?? "",
-      );
+      if (snapshot.exists) {
+        dynamic data = snapshot.data();
+        gamer = Gamer(
+          id: data["id"],
+          name: data["name"],
+          email: data["email"],
+          code: data["code"],
+          points: data["points"],
+          picture: data["picture"],
+        );
+        // notifyListeners();
+      } else {
+        gamer = Gamer(
+          id: user.uid,
+          name: user.displayName!,
+          email: user.email!,
+          picture: user.photoURL!,
+          points: 0,
+          code: (Random().nextInt(9999999) + 1000000).toString(),
+        );
+        await createGamerOnFirebase(gamer!);
+      }
     });
-    notifyListeners();
+    return gamer;
+  }
+
+  Future<void> createGamerOnFirebase(Gamer gamer) async {
+    final DocumentReference document =
+        _firebaseStore.collection("gamers").doc(gamer.id);
+    await document.set(
+      {
+        'id': gamer.id,
+        'name': gamer.name,
+        'email': gamer.email,
+        'code': gamer.code,
+        'points': gamer.points,
+        'picture': gamer.picture,
+      },
+    );
   }
 
   void updatePoints({required int points}) async {
@@ -57,15 +87,7 @@ class AuthenticationProvider extends ChangeNotifier {
           await _firebaseAuth.signInWithCredential(credential);
 
       if (userCredential.user != null) {
-        gamer = Gamer(
-          id: userCredential.user!.uid,
-          name: userCredential.user!.displayName ?? "",
-          email: userCredential.user!.email ?? "",
-          code: "123456",
-          points: 0,
-          picture: userCredential.user!.photoURL ?? "",
-        );
-        notifyListeners();
+        gamer = await createGamer(userCredential.user!);
       }
     } on Exception catch (e) {}
     return gamer;
@@ -75,6 +97,7 @@ class AuthenticationProvider extends ChangeNotifier {
     try {
       await FirebaseAuth.instance.signOut();
       await GoogleSignIn().signOut();
+      gamer = null;
       return true;
     } on Exception catch (_) {
       return false;

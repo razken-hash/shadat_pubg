@@ -64,18 +64,36 @@ class SpinWheelPainter extends CustomPainter {
       Rect.fromLTWH(r + r * cosPiBy3 - 26, r - r * sinPiBy3 - 6, 14, 14),
       paint,
     );
-    // canvas.drawOval(
-    //   Rect.fromLTWH(r + r * piBy6 - 14, r + r * piBy6 - 14, 14, 14),
-    //   paint,
-    // );
-    // canvas.drawOval(
-    //   Rect.fromLTWH(r - r * piBy6 + 3, r + r * piBy6 - 14, 14, 14),
-    //   paint,
-    // );
-    // canvas.drawOval(
-    //   Rect.fromLTWH(r - r * piBy6 - 3, r - r * piBy6 + 3, 14, 14),
-    //   paint,
-    // );
+    canvas.drawOval(
+      Rect.fromLTWH(r + r * sinPiBy3 - 8, r - r * cosPiBy3 + 12, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(r + r * sinPiBy3 - 6, r + r * cosPiBy3 - 30, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(r + r * cosPiBy3 - 28, r + r * sinPiBy3 - 7, 14, 14),
+      paint,
+    );
+
+    canvas.drawOval(
+      Rect.fromLTWH(r * cosPiBy3 + 14, r - r * sinPiBy3 - 7, 14, 14),
+      paint,
+    );
+
+    canvas.drawOval(
+      Rect.fromLTWH(15, r - r * cosPiBy3 + 15, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(15, r + r * cosPiBy3 - 28, 14, 14),
+      paint,
+    );
+    canvas.drawOval(
+      Rect.fromLTWH(r * cosPiBy3 + 14, r + r * sinPiBy3 - 8, 14, 14),
+      paint,
+    );
 
     path.close();
     paint.color = Colors.black;
@@ -167,6 +185,11 @@ class SpinWheelPainter extends CustomPainter {
     path.close();
     canvas.drawPath(path, paint);
 
+    paint.color = const Color(0xFFF3D34A);
+    paint.strokeWidth = 4;
+    canvas.drawLine(
+        Offset(r, r), start.translate(int.parse(text) < 5 ? 2 : -2, 0), paint);
+
     final textSpan = TextSpan(
       text: text,
       style: const TextStyle(
@@ -185,11 +208,11 @@ class SpinWheelPainter extends CustomPainter {
     );
 
     textPainter.paint(
-        canvas, Offset((start.dx + end.dx) * .45, (start.dy + end.dy) * .44));
+        canvas, Offset((start.dx + end.dx) * .48, (start.dy + end.dy) * .44));
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 }

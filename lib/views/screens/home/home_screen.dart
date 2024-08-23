@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 5),
     )..addListener(() {
         setState(() {
           angle = !back ? angle + 1 : angle - 1;
@@ -80,7 +80,8 @@ class _HomeScreenState extends State<HomeScreen>
                 child: Stack(
                   children: [
                     AnimatedRotation(
-                      duration: const Duration(seconds: 3),
+                      duration: const Duration(seconds: 5),
+                      curve: Curves.easeInOutSine,
                       turns: turns,
                       child: Container(
                         height: 320,

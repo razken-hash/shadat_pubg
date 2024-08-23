@@ -61,24 +61,24 @@ class _SplashScreenState extends State<SplashScreen> {
                     Provider.of<AuthenticationProvider>(context, listen: false)
                         .createGamer(user)
                         .then((value) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (_) => const PubgScreen()),
-                      );
+                      if (mounted) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => const PubgScreen()),
+                        );
+                      }
+
                       return true; // Stop listening after navigating
                     });
                   } else {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => const AuthScreen()),
-                    );
+                    if (mounted) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (_) => const AuthScreen()),
+                      );
+                    }
                   }
                   return false;
-                }).catchError((error) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const AuthScreen()),
-                  );
                 });
               },
             ),
