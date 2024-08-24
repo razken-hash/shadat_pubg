@@ -88,11 +88,12 @@ class _PubgScreenState extends State<PubgScreen>
                     curve: Curves.fastOutSlowIn,
                     duration: const Duration(milliseconds: 500),
                     start: drawerProvider.isDrawerOpened ? 0 : -288,
-                    child: PubgDrawer(
-                      onItemSelected: () {
-                        drawerProvider.controlDrawer(_animationController);
-                      },
-                    ),
+                    // child: PubgDrawer(
+                    //   onItemSelected: () {
+                    //     drawerProvider.controlDrawer(_animationController);
+                    //   },
+                    // ),
+                    child: const Center(),
                   ),
                   Transform(
                     alignment: Alignment.center,

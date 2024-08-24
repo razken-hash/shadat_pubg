@@ -1,8 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shadat_pubg/views/screens/home/win_box.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 
+typedef AsyncCallbackInt = Future<int> Function();
+
 class TurnerButton extends StatefulWidget {
-  final VoidCallback onTurn;
+  final AsyncCallbackInt onTurn;
   const TurnerButton({
     super.key,
     required this.onTurn,
@@ -44,7 +48,15 @@ class _TurnerButtonState extends State<TurnerButton>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.onTurn();
+        widget.onTurn().then(
+          (value) async {
+            await Future.delayed(const Duration(milliseconds: 5500));
+            showDialog(
+              context: context,
+              builder: (context) => const WinBox(value: 1),
+            );
+          },
+        );
       },
       child: Transform.scale(
         scale: _animationController.value + 0.9,

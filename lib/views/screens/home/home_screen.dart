@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/home/rotated_light.dart';
 import 'package:shadat_pubg/views/screens/home/turner_button.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
@@ -23,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   double turns = 0;
+  double imageTurns = 0;
 
   late AnimationController _animationController;
 
@@ -34,6 +36,9 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
+    setState(() {
+      imageTurns = 1000;
+    });
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
@@ -63,105 +68,124 @@ class _HomeScreenState extends State<HomeScreen>
         builder: (context, authenticationProvider, child) {
       return PubgScaffold(
         content: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Stack(
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: PubgColors.primaryColor,
-                    borderRadius: BorderRadius.circular(20),
-                    border:
-                        Border.all(width: 2, color: PubgColors.secondaryColor),
-                  ),
-                  child: Text(
-                    "${authenticationProvider.gamer!.points}",
-                    style: const TextStyle(
-                      color: PubgColors.whiteColor,
-                      fontSize: 20,
-                    ),
-                  ),
+              const PositionedDirectional(
+                start: -200,
+                child: RotatedLight(
+                  color: PubgColors.blackColor,
                 ),
               ),
-              const Spacer(),
-              SizedBox(
-                height: 320,
-                width: 320,
-                child: Stack(
-                  children: [
-                    AnimatedRotation(
-                      duration: const Duration(seconds: 5),
-                      curve: Curves.easeInOutSine,
-                      turns: turns,
-                      child: Container(
-                        height: 320,
-                        width: 320,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: CustomPaint(
-                          painter: SpinWheelPainter(),
+              PositionedDirectional(
+                bottom: -200,
+                start: (MediaQuery.of(context).size.width - 400) / 2,
+                child: const RotatedLight(
+                  color: PubgColors.whiteColor,
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: PubgColors.primaryColor,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            width: 2, color: PubgColors.secondaryColor),
+                      ),
+                      child: const Text(
+                        // "${authenticationProvider.gamer!.points}",
+                        "222",
+                        style: TextStyle(
+                          color: PubgColors.whiteColor,
+                          fontSize: 20,
                         ),
                       ),
                     ),
-                    AnimatedRotation(
-                      turns: _animationController.isAnimating
-                          ? angle > 0
-                              ? 0.05
-                              : -0.05
-                          : 0,
-                      duration: const Duration(milliseconds: 200),
-                      child: Center(
-                        child: SizedBox(
-                          height: 80,
-                          width: 80,
-                          child: CustomPaint(
-                            painter: SpinWheelPointerPainter(),
+                  ),
+                  const Spacer(),
+                  SizedBox(
+                    height: 320,
+                    width: 320,
+                    child: Stack(
+                      children: [
+                        AnimatedRotation(
+                          duration: const Duration(seconds: 5),
+                          curve: Curves.easeInOutSine,
+                          turns: turns,
+                          child: Container(
+                            height: 320,
+                            width: 320,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: CustomPaint(
+                              painter: SpinWheelPainter(),
+                            ),
                           ),
                         ),
-                      ),
+                        AnimatedRotation(
+                          turns: _animationController.isAnimating
+                              ? angle > 0
+                                  ? 0.05
+                                  : -0.05
+                              : 0,
+                          duration: const Duration(milliseconds: 200),
+                          child: Center(
+                            child: SizedBox(
+                              height: 80,
+                              width: 80,
+                              child: CustomPaint(
+                                painter: SpinWheelPointerPainter(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              TurnerButton(
-                onTurn: () async {
-                  await spinPlayer.play(
-                    AssetSource(
-                      AssetsManager.getAudio("spin"),
-                    ),
-                  );
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  TurnerButton(
+                    onTurn: () async {
+                      await spinPlayer.play(
+                        AssetSource(
+                          AssetsManager.getAudio("spin"),
+                        ),
+                      );
 
-                  if (_animationController.value == 0) {
-                    _animationController.forward();
-                  } else {
-                    _animationController.reverse();
-                  }
-                  setState(() {
-                    turns = turns -
-                        (turns == 0 ? 0 : 0.0625) +
-                        20 +
-                        0.0625 * (Random().nextInt(8) * 2 + 1);
-                  });
-                  double a = turns - turns.toInt();
-                  double b = a / 0.0625;
-                  int intB = b.toInt();
-                  index = 7 - intB ~/ 2;
-                  Future.delayed(const Duration(seconds: 3)).then((value) {
-                    authenticationProvider.updatePoints(points: index);
-                  });
-                },
+                      if (_animationController.value == 0) {
+                        _animationController.forward();
+                      } else {
+                        _animationController.reverse();
+                      }
+                      setState(() {
+                        turns = turns -
+                            (turns == 0 ? 0 : 0.0625) +
+                            20 +
+                            0.0625 * (Random().nextInt(8) * 2 + 1);
+                      });
+                      double a = turns - turns.toInt();
+                      double b = a / 0.0625;
+                      int intB = b.toInt();
+                      index = 7 - intB ~/ 2;
+                      // Future.delayed(const Duration(seconds: 3)).then((value) {
+                      //   authenticationProvider.updatePoints(points: index);
+                      // });
+                      return index;
+                    },
+                  ),
+                  const Spacer(),
+                  const Spacer(),
+                ],
               ),
-              const Spacer(),
-              const Spacer(),
             ],
           ),
         ),
