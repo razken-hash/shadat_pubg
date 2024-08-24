@@ -1,16 +1,34 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
 import 'package:shadat_pubg/views/screens/home/rotated_light.dart';
 
 import 'package:shadat_pubg/views/themes/colors.dart';
 
-class WinBox extends StatelessWidget {
+class WinBox extends StatefulWidget {
   final int value;
   const WinBox({
     super.key,
     required this.value,
   });
+
+  @override
+  State<WinBox> createState() => _WinBoxState();
+}
+
+class _WinBoxState extends State<WinBox> {
+  final AudioPlayer _audioPlayer = AudioPlayer(), _moneyPlayer = AudioPlayer();
+
+  @override
+  void initState() {
+    _audioPlayer.play(
+      AssetSource(
+        AssetsManager.getAudio("win"),
+      ),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +59,7 @@ class WinBox extends StatelessWidget {
                       AssetsManager.getImage("money"),
                     ),
                     Text(
-                      "تهانينا!\n لقد حصلت على $value من العجلة",
+                      "تهانينا!\n لقد حصلت على ${widget.value} من العجلة",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 20,
@@ -51,6 +69,11 @@ class WinBox extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Navigator.pop(context);
+                        _moneyPlayer.play(
+                          AssetSource(
+                            AssetsManager.getAudio("coin_add"),
+                          ),
+                        );
                       },
                       child: Container(
                         height: 45,
