@@ -3,10 +3,12 @@ import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/home/golden_box_button.dart';
 import 'package:shadat_pubg/views/screens/home/rotated_light.dart';
 import 'package:shadat_pubg/views/screens/home/turner_button.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
@@ -67,45 +69,111 @@ class _HomeScreenState extends State<HomeScreen>
     return Consumer<AuthenticationProvider>(
         builder: (context, authenticationProvider, child) {
       return PubgScaffold(
-        content: SafeArea(
-          child: Stack(
-            children: [
-              const PositionedDirectional(
-                start: -200,
-                child: RotatedLight(
-                  color: PubgColors.blackColor,
+        content: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SvgPicture.asset(
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fitWidth,
+                color: const Color(0xFF1777AC).withOpacity(.8),
+                AssetsManager.getVector("floor"),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Transform.rotate(
+                angle: pi,
+                child: SvgPicture.asset(
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.fitWidth,
+                  color: const Color(0xFF1777AC).withOpacity(.8),
+                  AssetsManager.getVector("floor"),
                 ),
               ),
-              PositionedDirectional(
-                bottom: -200,
-                start: (MediaQuery.of(context).size.width - 400) / 2,
-                child: const RotatedLight(
-                  color: PubgColors.whiteColor,
-                ),
+            ),
+            const PositionedDirectional(
+              start: -200,
+              child: RotatedLight(
+                color: PubgColors.blackColor,
               ),
-              Column(
+            ),
+            PositionedDirectional(
+              bottom: -200,
+              start: (MediaQuery.of(context).size.width - 400) / 2,
+              child: const RotatedLight(
+                color: PubgColors.whiteColor,
+              ),
+            ),
+            SafeArea(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
                       margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 5),
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                       decoration: BoxDecoration(
                         color: PubgColors.primaryColor,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                             width: 2, color: PubgColors.secondaryColor),
                       ),
-                      child: const Text(
-                        // "${authenticationProvider.gamer!.points}",
-                        "222",
-                        style: TextStyle(
-                          color: PubgColors.whiteColor,
-                          fontSize: 20,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            // "${authenticationProvider.gamer.points}",
+                            "540",
+                            style: TextStyle(
+                              color: PubgColors.whiteColor,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Image.asset(
+                            AssetsManager.getImage("money"),
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: PubgColors.primaryColor,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                            width: 2, color: PubgColors.secondaryColor),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "540",
+                            style: TextStyle(
+                              color: PubgColors.whiteColor,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Image.asset(
+                            AssetsManager.getImage("money"),
+                            height: 20,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -184,10 +252,27 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   const Spacer(),
                   const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: PubgColors.whiteColor,
+                          ),
+                        ),
+                        const GoldenBoxButton(),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });
