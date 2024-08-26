@@ -1,5 +1,11 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/home/win_box.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'dart:developer' as dev;
 
@@ -43,40 +49,59 @@ class _GoldenBoxButtonState extends State<GoldenBoxButton>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedRotation(
-      duration: const Duration(seconds: 1),
-      turns:
-          _animationController.status == AnimationStatus.forward ? 0.05 : -0.05,
-      curve: Curves.bounceInOut,
-      child: Column(
-        children: [
-          Image.asset(
-            AssetsManager.getImage("box"),
-            height: 50,
-          ),
-          InkWell(
-            onTap: () {},
-            child: Container(
-              height: 30,
-              width: 90,
-              decoration: BoxDecoration(
-                color: const Color(0xFFF1DEBD),
-                borderRadius: BorderRadius.circular(35),
-                border: Border.all(width: 4, color: PubgColors.yellowColor),
-              ),
-              child: const Center(
-                child: Text(
-                  "جمـع",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: PubgColors.orangeColor,
+    return Consumer<AuthenticationProvider>(
+        builder: (context, authenticationProvider, child) {
+      return AnimatedRotation(
+        duration: const Duration(seconds: 1),
+        turns: _animationController.status == AnimationStatus.forward
+            ? 0.05
+            : -0.05,
+        curve: Curves.bounceInOut,
+        child: Column(
+          children: [
+            Image.asset(
+              AssetsManager.getImage("box"),
+              height: 50,
+            ),
+            InkWell(
+              onTap: () {
+                log("HELLO");
+                authenticationProvider.getGoldenBoxGift().then(
+                  (isGifted) {
+                    if (isGifted) {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => const WinBox(
+                          value: "لقد حصلت على هديتك اليومية 1 عملة!",
+                        ),
+                      );
+                    }
+                  },
+                );
+              },
+              child: Container(
+                height: 30,
+                width: 90,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF1DEBD),
+                  borderRadius: BorderRadius.circular(35),
+                  border: Border.all(width: 4, color: PubgColors.yellowColor),
+                ),
+                child: const Center(
+                  child: Text(
+                    "جمـع",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: PubgColors.orangeColor,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }

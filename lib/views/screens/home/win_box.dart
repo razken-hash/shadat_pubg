@@ -7,7 +7,7 @@ import 'package:shadat_pubg/views/screens/home/rotated_light.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 
 class WinBox extends StatefulWidget {
-  final int value;
+  final String value;
   const WinBox({
     super.key,
     required this.value,
@@ -61,7 +61,7 @@ class _WinBoxState extends State<WinBox> {
                     AssetsManager.getImage("money"),
                   ),
                   Text(
-                    "تهانينا!\n لقد حصلت على ${widget.value} من العجلة",
+                    widget.value,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 20,

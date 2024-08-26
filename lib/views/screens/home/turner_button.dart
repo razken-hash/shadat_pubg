@@ -54,7 +54,9 @@ class _TurnerButtonState extends State<TurnerButton>
             showDialog(
               context: context,
               barrierDismissible: false,
-              builder: (context) => const WinBox(value: 1),
+              builder: (context) => WinBox(
+                value: "تهانينا!\n لقد حصلت على $value من العجلة",
+              ),
             );
           },
         );

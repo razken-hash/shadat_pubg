@@ -4,6 +4,8 @@ class Gamer {
   final String email;
   String code;
   int points;
+  int turns;
+  DateTime goldenBoxGiftDate;
   final String picture;
 
   Gamer({
@@ -12,6 +14,8 @@ class Gamer {
     required this.email,
     this.code = "",
     this.points = 0,
+    this.turns = 3,
+    required this.goldenBoxGiftDate,
     required this.picture,
   });
 }

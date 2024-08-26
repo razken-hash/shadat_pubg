@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen>
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "${authenticationProvider.gamer!.points}",
+                            "${authenticationProvider.gamer!.turns}",
                             style: const TextStyle(
                               color: PubgColors.whiteColor,
                               fontSize: 20,
@@ -170,9 +170,9 @@ class _HomeScreenState extends State<HomeScreen>
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text(
-                            "540",
-                            style: TextStyle(
+                          Text(
+                            "${authenticationProvider.gamer!.points}",
+                            style: const TextStyle(
                               color: PubgColors.whiteColor,
                               fontSize: 20,
                             ),
@@ -255,6 +255,7 @@ class _HomeScreenState extends State<HomeScreen>
                       index = 7 - intB ~/ 2;
                       Future.delayed(const Duration(seconds: 5)).then((value) {
                         authenticationProvider.updatePoints(points: index);
+                        authenticationProvider.updateTurns(turns: -1);
                       });
                       return index;
                     },

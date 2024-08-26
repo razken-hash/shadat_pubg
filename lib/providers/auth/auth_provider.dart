@@ -30,6 +30,8 @@ class AuthenticationProvider extends ChangeNotifier {
           email: data["email"],
           code: data["code"],
           points: data["points"],
+          turns: data["points"],
+          goldenBoxGiftDate: data["goldenBoxGiftDate"].toDate(),
           picture: data["picture"],
         );
         // notifyListeners();
@@ -39,8 +41,8 @@ class AuthenticationProvider extends ChangeNotifier {
           name: user.displayName!,
           email: user.email!,
           picture: user.photoURL!,
-          points: 0,
           code: (Random().nextInt(9999999) + 1000000).toString(),
+          goldenBoxGiftDate: DateTime(2000),
         );
         await createGamerOnFirebase(gamer!);
       }
@@ -58,7 +60,9 @@ class AuthenticationProvider extends ChangeNotifier {
         'email': gamer.email,
         'code': gamer.code,
         'points': gamer.points,
+        'turns': gamer.turns,
         'picture': gamer.picture,
+        'goldenBoxGiftDate': gamer.goldenBoxGiftDate,
       },
     );
   }
@@ -68,6 +72,14 @@ class AuthenticationProvider extends ChangeNotifier {
     final DocumentReference document =
         _firebaseStore.collection("gamers").doc(gamer!.id);
     await document.update({"points": gamer!.points});
+    notifyListeners();
+  }
+
+  void updateTurns({required int turns}) async {
+    gamer!.points += turns;
+    final DocumentReference document =
+        _firebaseStore.collection("gamers").doc(gamer!.id);
+    await document.update({"turns": gamer!.turns});
     notifyListeners();
   }
 
@@ -105,5 +117,18 @@ class AuthenticationProvider extends ChangeNotifier {
     } on Exception catch (_) {
       return false;
     }
+  }
+
+  Future<bool> getGoldenBoxGift() async {
+    if (DateTime.now().difference(gamer!.goldenBoxGiftDate).inDays >= 1 &&
+        DateTime.now().isAfter(gamer!.goldenBoxGiftDate)) {
+      gamer!.goldenBoxGiftDate = DateTime.now();
+      final DocumentReference document =
+          _firebaseStore.collection("gamers").doc(gamer!.id);
+      await document.update({"goldenBoxGiftDate": gamer!.goldenBoxGiftDate});
+      updatePoints(points: 1);
+      return true;
+    }
+    return false;
   }
 }

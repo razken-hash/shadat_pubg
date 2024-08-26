@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/providers/drawer/drawer_provider.dart';
 import 'package:shadat_pubg/views/config/internationalization.dart';
-import 'package:shadat_pubg/views/screens/pubg_screen.dart';
 import 'package:shadat_pubg/views/screens/splash/splash_screen.dart';
 import 'package:shadat_pubg/views/themes/themes.dart';
 
