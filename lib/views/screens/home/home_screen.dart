@@ -82,14 +82,24 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             Align(
               alignment: Alignment.topCenter,
-              child: Transform.rotate(
-                angle: pi,
-                child: SvgPicture.asset(
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fitWidth,
-                  color: const Color(0xFF1777AC).withOpacity(.8),
-                  AssetsManager.getVector("floor"),
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    height: 20,
+                    width: double.infinity,
+                    color: const Color(0xFF1777AC).withOpacity(.8),
+                  ),
+                  Transform.rotate(
+                    angle: pi,
+                    child: SvgPicture.asset(
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fitWidth,
+                      color: const Color(0xFF1777AC).withOpacity(.8),
+                      AssetsManager.getVector("floor"),
+                    ),
+                  ),
+                ],
               ),
             ),
             const PositionedDirectional(
@@ -129,10 +139,9 @@ class _HomeScreenState extends State<HomeScreen>
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text(
-                            // "${authenticationProvider.gamer.points}",
-                            "540",
-                            style: TextStyle(
+                          Text(
+                            "${authenticationProvider.gamer!.points}",
+                            style: const TextStyle(
                               color: PubgColors.whiteColor,
                               fontSize: 20,
                             ),
@@ -244,9 +253,9 @@ class _HomeScreenState extends State<HomeScreen>
                       double b = a / 0.0625;
                       int intB = b.toInt();
                       index = 7 - intB ~/ 2;
-                      // Future.delayed(const Duration(seconds: 3)).then((value) {
-                      //   authenticationProvider.updatePoints(points: index);
-                      // });
+                      Future.delayed(const Duration(seconds: 5)).then((value) {
+                        authenticationProvider.updatePoints(points: index);
+                      });
                       return index;
                     },
                   ),

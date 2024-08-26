@@ -32,76 +32,82 @@ class _WinBoxState extends State<WinBox> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        const Center(
-          child: RotatedLight(
-            size: 600,
-            color: PubgColors.whiteColor,
+    return Material(
+      color: Colors.transparent,
+      child: Stack(
+        children: [
+          const Center(
+            child: RotatedLight(
+              size: 600,
+              color: PubgColors.whiteColor,
+            ),
           ),
-        ),
-        Center(
-          child: SizedBox(
-            width: 300,
-            child: Dialog(
-              alignment: Alignment.center,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(width: 4, color: PubgColors.yellowColor),
-                  color: PubgColors.orangeColor,
-                ),
-                height: 280,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset(
-                      AssetsManager.getImage("money"),
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(width: 4, color: PubgColors.yellowColor),
+                color: PubgColors.orangeColor,
+              ),
+              height: 280,
+              padding: const EdgeInsets.all(
+                10,
+              ),
+              width: 230,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.asset(
+                    AssetsManager.getImage("money"),
+                  ),
+                  Text(
+                    "تهانينا!\n لقد حصلت على ${widget.value} من العجلة",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: PubgColors.whiteColor,
                     ),
-                    Text(
-                      "تهانينا!\n لقد حصلت على ${widget.value} من العجلة",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: PubgColors.whiteColor,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      _moneyPlayer
+                          .play(
+                        AssetSource(
+                          AssetsManager.getAudio("coin_add"),
+                        ),
+                      )
+                          .then(
+                        (value) {
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                    child: Container(
+                      height: 45,
+                      width: 140,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF1DEBD),
+                        borderRadius: BorderRadius.circular(35),
+                        border:
+                            Border.all(width: 4, color: PubgColors.yellowColor),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          "يجمع",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: PubgColors.orangeColor,
+                          ),
+                        ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                        _moneyPlayer.play(
-                          AssetSource(
-                            AssetsManager.getAudio("coin_add"),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 45,
-                        width: 140,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF1DEBD),
-                          borderRadius: BorderRadius.circular(35),
-                          border: Border.all(
-                              width: 4, color: PubgColors.yellowColor),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "يجمع",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: PubgColors.orangeColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

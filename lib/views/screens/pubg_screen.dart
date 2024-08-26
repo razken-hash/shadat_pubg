@@ -26,8 +26,8 @@ class _PubgScreenState extends State<PubgScreen>
 
   @override
   void initState() {
-    // player.setReleaseMode(ReleaseMode.loop);
-    // player.play(AssetSource(AssetsManager.getAudio("background")));
+    player.setReleaseMode(ReleaseMode.loop);
+    player.play(AssetSource(AssetsManager.getAudio("background")));
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500))
       ..addListener(() {
@@ -88,12 +88,11 @@ class _PubgScreenState extends State<PubgScreen>
                     curve: Curves.fastOutSlowIn,
                     duration: const Duration(milliseconds: 500),
                     start: drawerProvider.isDrawerOpened ? 0 : -288,
-                    // child: PubgDrawer(
-                    //   onItemSelected: () {
-                    //     drawerProvider.controlDrawer(_animationController);
-                    //   },
-                    // ),
-                    child: const Center(),
+                    child: PubgDrawer(
+                      onItemSelected: () {
+                        drawerProvider.controlDrawer(_animationController);
+                      },
+                    ),
                   ),
                   Transform(
                     alignment: Alignment.center,

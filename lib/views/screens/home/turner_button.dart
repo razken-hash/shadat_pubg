@@ -53,6 +53,7 @@ class _TurnerButtonState extends State<TurnerButton>
             await Future.delayed(const Duration(milliseconds: 5500));
             showDialog(
               context: context,
+              barrierDismissible: false,
               builder: (context) => const WinBox(value: 1),
             );
           },
