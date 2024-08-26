@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/home/alert_box.dart';
 import 'package:shadat_pubg/views/screens/home/golden_box_button.dart';
 import 'package:shadat_pubg/views/screens/home/rotated_light.dart';
 import 'package:shadat_pubg/views/screens/home/turner_button.dart';
@@ -148,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen>
                           ),
                           const SizedBox(width: 10),
                           Image.asset(
-                            AssetsManager.getImage("money"),
+                            AssetsManager.getImage("wheel"),
                             height: 20,
                           ),
                         ],
@@ -232,32 +233,37 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   TurnerButton(
                     onTurn: () async {
-                      await spinPlayer.play(
-                        AssetSource(
-                          AssetsManager.getAudio("spin"),
-                        ),
-                      );
+                      if (authenticationProvider.canTurnWheel) {
+                        await spinPlayer.play(
+                          AssetSource(
+                            AssetsManager.getAudio("spin"),
+                          ),
+                        );
 
-                      if (_animationController.value == 0) {
-                        _animationController.forward();
-                      } else {
-                        _animationController.reverse();
+                        if (_animationController.value == 0) {
+                          _animationController.forward();
+                        } else {
+                          _animationController.reverse();
+                        }
+                        setState(() {
+                          turns = turns -
+                              (turns == 0 ? 0 : 0.0625) +
+                              20 +
+                              0.0625 * (Random().nextInt(8) * 2 + 1);
+                        });
+                        double a = turns - turns.toInt();
+                        double b = a / 0.0625;
+                        int intB = b.toInt();
+                        index = 7 - intB ~/ 2;
+                        Future.delayed(const Duration(seconds: 5))
+                            .then((value) {
+                          authenticationProvider.updatePoints(
+                              points: index + 1);
+                          authenticationProvider.updateTurns(turns: -1);
+                        });
+                        return index;
                       }
-                      setState(() {
-                        turns = turns -
-                            (turns == 0 ? 0 : 0.0625) +
-                            20 +
-                            0.0625 * (Random().nextInt(8) * 2 + 1);
-                      });
-                      double a = turns - turns.toInt();
-                      double b = a / 0.0625;
-                      int intB = b.toInt();
-                      index = 7 - intB ~/ 2;
-                      Future.delayed(const Duration(seconds: 5)).then((value) {
-                        authenticationProvider.updatePoints(points: index + 1);
-                        authenticationProvider.updateTurns(turns: -1);
-                      });
-                      return index;
+                      return -1;
                     },
                   ),
                   const Spacer(),

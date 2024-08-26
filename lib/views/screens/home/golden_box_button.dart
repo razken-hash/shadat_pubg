@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/home/alert_box.dart';
 import 'package:shadat_pubg/views/screens/home/win_box.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 
@@ -57,6 +58,15 @@ class _GoldenBoxButtonState extends State<GoldenBoxButton>
                   barrierDismissible: false,
                   builder: (context) => const WinBox(
                     value: "لقد حصلت على هديتك اليومية 1 عملة!",
+                  ),
+                );
+              } else {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) => const AlertBox(
+                    message:
+                        "لقد حصلت على هديتك لهذا اليوم، أعد المحاولة غدا!",
                   ),
                 );
               }

@@ -41,12 +41,12 @@ class SpinWheelPointerPainter extends CustomPainter {
       paint,
     );
     const textSpan = TextSpan(
-      text: "WIN",
+      text: "WiN",
       style: TextStyle(
-        color: PubgColors.orangeColor,
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-      ),
+          color: PubgColors.orangeColor,
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          fontFamily: "ElMessiri"),
     );
     final textPainter = TextPainter(
       text: textSpan,
@@ -59,7 +59,7 @@ class SpinWheelPointerPainter extends CustomPainter {
 
     textPainter.paint(
       canvas,
-      const Offset(16, 26),
+      const Offset(18, 26),
     );
   }
 

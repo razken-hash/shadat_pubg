@@ -40,7 +40,15 @@ class ShadatPubg extends StatelessWidget {
       child: MaterialApp(
         localizationsDelegates: [myLocalizationDelegate],
         debugShowCheckedModeBanner: false,
-        theme: lightTheme,
+        theme: ThemeData(
+          fontFamily: "ElMessiri",
+        ).copyWith(
+          primaryColor: lightTheme.primaryColor,
+          dividerColor: lightTheme.dividerColor,
+          scaffoldBackgroundColor: lightTheme.scaffoldBackgroundColor,
+          textButtonTheme: lightTheme.textButtonTheme,
+          inputDecorationTheme: lightTheme.inputDecorationTheme,
+        ),
         home: const SplashScreen(),
       ),
     );

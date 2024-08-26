@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shadat_pubg/views/screens/home/alert_box.dart';
 import 'package:shadat_pubg/views/screens/home/win_box.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 
@@ -50,14 +51,25 @@ class _TurnerButtonState extends State<TurnerButton>
       onTap: () {
         widget.onTurn().then(
           (value) async {
-            await Future.delayed(const Duration(milliseconds: 5500));
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => WinBox(
-                value: "تهانينا!\n لقد حصلت على ${value + 1} من العجلة",
-              ),
-            );
+            if (value != -1) {
+              await Future.delayed(const Duration(milliseconds: 5500));
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => WinBox(
+                  value: "تهانينا!\n لقد حصلت على ${value + 1} من العجلة",
+                ),
+              );
+            } else {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => const AlertBox(
+                  message:
+                      "مع الأسف، لا تملك شدات أخرى، شاهد إعلانا من أجل الحصول على شدات إضافية",
+                ),
+              );
+            }
           },
         );
       },
@@ -75,7 +87,7 @@ class _TurnerButtonState extends State<TurnerButton>
             child: Text(
               "تدوير",
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 28,
                 color: PubgColors.orangeColor,
                 fontWeight: FontWeight.bold,
               ),

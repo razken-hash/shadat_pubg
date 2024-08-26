@@ -191,13 +191,15 @@ class SpinWheelPainter extends CustomPainter {
     canvas.drawLine(
         Offset(r, r), start.translate(int.parse(text) < 5 ? 2 : -2, 0), paint);
 
+    canvas.save();
+
     final textSpan = TextSpan(
       text: text,
       style: const TextStyle(
-        color: Colors.black,
-        fontSize: 30,
-        fontWeight: FontWeight.bold,
-      ),
+          color: Colors.black,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          fontFamily: "ElMessiri"),
     );
     final textPainter = TextPainter(
       text: textSpan,
@@ -210,6 +212,7 @@ class SpinWheelPainter extends CustomPainter {
 
     textPainter.paint(
         canvas, Offset((start.dx + end.dx) * .48, (start.dy + end.dy) * .44));
+    canvas.restore();
   }
 
   @override

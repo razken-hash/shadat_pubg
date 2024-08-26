@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/home/alert_box.dart';
 import 'package:shadat_pubg/views/screens/home/win_box.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
@@ -35,19 +36,29 @@ class _DailyPrizeScreenState extends State<DailyPrizeScreen> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     color: PubgColors.primaryColor,
                     borderRadius: BorderRadius.circular(20),
                     border:
                         Border.all(width: 2, color: PubgColors.secondaryColor),
                   ),
-                  child: Text(
-                    "${authenticationProvider.gamer!.points}",
-                    style: const TextStyle(
-                      color: PubgColors.whiteColor,
-                      fontSize: 20,
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "${authenticationProvider.gamer!.points}",
+                        style: const TextStyle(
+                          color: PubgColors.whiteColor,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Image.asset(
+                        AssetsManager.getImage("money"),
+                        height: 20,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -129,11 +140,13 @@ class _DailyPrizeScreenState extends State<DailyPrizeScreen> {
                     TextButton(
                       onPressed: () {
                         List<int> prises = [1, 2, 3, 4, 5, 6, 10];
-                        selectedPrise = prises[Random().nextInt(prises.length)];
+                        int dailyPrise =
+                            prises[Random().nextInt(prises.length)];
                         authenticationProvider
-                            .getDailyPrise(prise: selectedPrise)
+                            .getDailyPrise(prise: dailyPrise)
                             .then(
                           (isPrised) {
+                            selectedPrise = dailyPrise;
                             if (isPrised) {
                               showDialog(
                                 context: context,
@@ -141,6 +154,15 @@ class _DailyPrizeScreenState extends State<DailyPrizeScreen> {
                                 builder: (context) => WinBox(
                                   value:
                                       "لقد حصلت على جائزتك اليومية $selectedPrise عملة!",
+                                ),
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => const AlertBox(
+                                  message:
+                                      "لقد حصلت على جائزتك لهذا اليوم، أعد المحاولة غدا!",
                                 ),
                               );
                             }

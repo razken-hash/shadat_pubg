@@ -71,6 +71,7 @@ ThemeData lightTheme = ThemeData.light(
         const TextStyle(
           fontSize: 18,
           color: PubgColors.whiteColor,
+          fontFamily: "ElMessiri",
         ),
       ),
     ),

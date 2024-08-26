@@ -147,4 +147,6 @@ class AuthenticationProvider extends ChangeNotifier {
     }
     return false;
   }
+
+  bool get canTurnWheel => gamer!.turns > 0;
 }
