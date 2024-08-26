@@ -254,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen>
                       int intB = b.toInt();
                       index = 7 - intB ~/ 2;
                       Future.delayed(const Duration(seconds: 5)).then((value) {
-                        authenticationProvider.updatePoints(points: index);
+                        authenticationProvider.updatePoints(points: index + 1);
                         authenticationProvider.updateTurns(turns: -1);
                       });
                       return index;

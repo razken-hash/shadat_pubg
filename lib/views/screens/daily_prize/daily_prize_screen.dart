@@ -1,15 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 
+import 'package:shadat_pubg/providers/auth/auth_provider.dart';
 import 'package:shadat_pubg/views/config/assets_manager.dart';
+import 'package:shadat_pubg/views/screens/home/win_box.dart';
 import 'package:shadat_pubg/views/themes/colors.dart';
 import 'package:shadat_pubg/views/widgets/pubg_scaffold.dart';
 
-class DailyPrizeScreen extends StatelessWidget {
+class DailyPrizeScreen extends StatefulWidget {
   const DailyPrizeScreen({super.key});
+
+  @override
+  State<DailyPrizeScreen> createState() => _DailyPrizeScreenState();
+}
+
+class _DailyPrizeScreenState extends State<DailyPrizeScreen> {
+  int selectedPrise = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -64,57 +73,78 @@ class DailyPrizeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Expanded(
+                    Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           PrizeBox(
                             prize: 1,
+                            isSelected: selectedPrise == 1,
                           ),
                           PrizeBox(
                             prize: 2,
+                            isSelected: selectedPrise == 2,
                           ),
                         ],
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           PrizeBox(
                             prize: 3,
+                            isSelected: selectedPrise == 3,
                           ),
                           PrizeBox(
                             prize: 4,
+                            isSelected: selectedPrise == 4,
                           ),
                         ],
                       ),
                     ),
-                    const Expanded(
+                    Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           PrizeBox(
                             prize: 5,
+                            isSelected: selectedPrise == 5,
                           ),
                           PrizeBox(
                             prize: 6,
+                            isSelected: selectedPrise == 6,
                           ),
                         ],
                       ),
                     ),
-                    const PrizeBox(
+                    PrizeBox(
                       prize: 10,
+                      isSelected: selectedPrise == 10,
                     ),
                     const SizedBox(height: 30),
                     TextButton(
                       onPressed: () {
-                        List<int> values = [1, 2, 3, 4, 5, 6, 10];
-                        authenticationProvider.updatePoints(
-                          points: values[Random().nextInt(values.length)],
+                        List<int> prises = [1, 2, 3, 4, 5, 6, 10];
+                        selectedPrise = prises[Random().nextInt(prises.length)];
+                        authenticationProvider
+                            .getDailyPrise(prise: selectedPrise)
+                            .then(
+                          (isPrised) {
+                            if (isPrised) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => WinBox(
+                                  value:
+                                      "لقد حصلت على جائزتك اليومية $selectedPrise عملة!",
+                                ),
+                              );
+                            }
+                          },
                         );
                       },
                       child: const Text(
@@ -142,9 +172,11 @@ class DailyPrizeScreen extends StatelessWidget {
 
 class PrizeBox extends StatelessWidget {
   final int prize;
+  final bool isSelected;
   const PrizeBox({
     super.key,
     required this.prize,
+    required this.isSelected,
   });
 
   @override
@@ -155,7 +187,7 @@ class PrizeBox extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: PubgColors.primaryColor,
+          color: isSelected ? PubgColors.yellowColor : PubgColors.primaryColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -6,6 +6,7 @@ class Gamer {
   int points;
   int turns;
   DateTime goldenBoxGiftDate;
+  DateTime dailyPriseDate;
   final String picture;
 
   Gamer({
@@ -16,6 +17,7 @@ class Gamer {
     this.points = 0,
     this.turns = 3,
     required this.goldenBoxGiftDate,
+    required this.dailyPriseDate,
     required this.picture,
   });
 }

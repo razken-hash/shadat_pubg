@@ -55,7 +55,7 @@ class _TurnerButtonState extends State<TurnerButton>
               context: context,
               barrierDismissible: false,
               builder: (context) => WinBox(
-                value: "تهانينا!\n لقد حصلت على $value من العجلة",
+                value: "تهانينا!\n لقد حصلت على ${value + 1} من العجلة",
               ),
             );
           },

@@ -30,8 +30,9 @@ class AuthenticationProvider extends ChangeNotifier {
           email: data["email"],
           code: data["code"],
           points: data["points"],
-          turns: data["points"],
+          turns: data["turns"],
           goldenBoxGiftDate: data["goldenBoxGiftDate"].toDate(),
+          dailyPriseDate: data["dailyPriseDate"].toDate(),
           picture: data["picture"],
         );
         // notifyListeners();
@@ -43,6 +44,7 @@ class AuthenticationProvider extends ChangeNotifier {
           picture: user.photoURL!,
           code: (Random().nextInt(9999999) + 1000000).toString(),
           goldenBoxGiftDate: DateTime(2000),
+          dailyPriseDate: DateTime(2000),
         );
         await createGamerOnFirebase(gamer!);
       }
@@ -63,6 +65,7 @@ class AuthenticationProvider extends ChangeNotifier {
         'turns': gamer.turns,
         'picture': gamer.picture,
         'goldenBoxGiftDate': gamer.goldenBoxGiftDate,
+        'dailyPriseDate': gamer.dailyPriseDate,
       },
     );
   }
@@ -76,7 +79,7 @@ class AuthenticationProvider extends ChangeNotifier {
   }
 
   void updateTurns({required int turns}) async {
-    gamer!.points += turns;
+    gamer!.turns += turns;
     final DocumentReference document =
         _firebaseStore.collection("gamers").doc(gamer!.id);
     await document.update({"turns": gamer!.turns});
@@ -127,6 +130,19 @@ class AuthenticationProvider extends ChangeNotifier {
           _firebaseStore.collection("gamers").doc(gamer!.id);
       await document.update({"goldenBoxGiftDate": gamer!.goldenBoxGiftDate});
       updatePoints(points: 1);
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> getDailyPrise({required int prise}) async {
+    if (DateTime.now().difference(gamer!.dailyPriseDate).inDays >= 1 &&
+        DateTime.now().isAfter(gamer!.dailyPriseDate)) {
+      gamer!.dailyPriseDate = DateTime.now();
+      final DocumentReference document =
+          _firebaseStore.collection("gamers").doc(gamer!.id);
+      await document.update({"dailyPriseDate": gamer!.dailyPriseDate});
+      updatePoints(points: prise);
       return true;
     }
     return false;
