@@ -26,8 +26,8 @@ class _PubgScreenState extends State<PubgScreen>
 
   @override
   void initState() {
-    // player.setReleaseMode(ReleaseMode.loop);
-    // player.play(AssetSource(AssetsManager.getAudio("background")));
+    player.setReleaseMode(ReleaseMode.loop);
+    player.play(AssetSource(AssetsManager.getAudio("background")));
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500))
       ..addListener(() {

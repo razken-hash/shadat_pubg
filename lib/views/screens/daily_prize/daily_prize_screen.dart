@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,9 +47,10 @@ class _DailyPrizeScreenState extends State<DailyPrizeScreen> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        "${authenticationProvider.gamer!.points}",
-                        style: const TextStyle(
+                      AnimatedFlipCounter(
+                        duration: const Duration(milliseconds: 500),
+                        value: authenticationProvider.gamer!.points,
+                        textStyle: const TextStyle(
                           color: PubgColors.whiteColor,
                           fontSize: 20,
                         ),
